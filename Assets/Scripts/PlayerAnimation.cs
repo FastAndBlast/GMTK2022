@@ -99,12 +99,14 @@ public class PlayerAnimation : MonoBehaviour
     }
 
     private void Update() {
+        /*
         Vector2 movementAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if (movementAxis != Vector2.zero && !playing)
         {
             StartAnimation(movementAxis);
         }
+        */
 
         if (playing)
         {

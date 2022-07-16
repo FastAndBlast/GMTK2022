@@ -25,26 +25,16 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Start()
     {
         maxHealth = health;
+
+        GameManager.entities.Add(this);
     }
 
-    public virtual void MovementTick()
-    {
+    public abstract void MovementTick();
 
-    }
+    public abstract void ActionTick();
 
-    public virtual void ActionTick()
-    {
-
-    }
-
-    public virtual void ParticleTick()
-    {
-
-    }
+    public abstract void ParticleTick();
 
     // On health change event
-    public virtual void OnHealthChange(int before, int after)
-    {
-
-    }
+    public abstract void OnHealthChange(int before, int after);
 }
