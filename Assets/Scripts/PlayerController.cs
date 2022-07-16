@@ -91,19 +91,35 @@ public class PlayerController : Entity
             // Movement actions
             if (actions[0] == playerAction.up)
             {
-                anim.StartAnimation(Vector2.up);
+                if (currentCell.neighbors[0].pathable)
+                {
+                    currentCell = currentCell.neighbors[0];
+                    anim.StartAnimation(Vector2.up);
+                }
             }
             else if (actions[0] == playerAction.right)
             {
-                anim.StartAnimation(Vector2.right);
+                if (currentCell.neighbors[3].pathable)
+                {
+                    currentCell = currentCell.neighbors[3];
+                    anim.StartAnimation(Vector2.right);
+                }
             }
             else if (actions[0] == playerAction.down)
             {
-                anim.StartAnimation(Vector2.down);
+                if (currentCell.neighbors[2].pathable)
+                {
+                    currentCell = currentCell.neighbors[2];
+                    anim.StartAnimation(Vector2.down);
+                }
             }
             else if (actions[0] == playerAction.left)
             {
-                anim.StartAnimation(Vector2.left);
+                if (currentCell.neighbors[1].pathable)
+                {
+                    currentCell = currentCell.neighbors[1];
+                    anim.StartAnimation(Vector2.left);
+                }
             }
         }
     }
