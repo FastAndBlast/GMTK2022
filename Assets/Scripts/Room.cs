@@ -14,14 +14,42 @@ public class Cell
 {
     public Cell[] neighbors = new Cell[4];
     // The position is relative to the parent
-    public Vector3 position;
+    public Vector3Int position;
+    public bool pathable = true;
 
+    private Cell prevOrigin;
+    public int costh = -1;
+    public int costf = -1;
+    public Cell previous;
+    
     public List<Cell> FindPath(Cell target)
     {
-        return new List<Cell>();
-        // TODO: IMPLEMENT PATHFINDING
+        return Pathfinding.Path(target, this);
     }
-    public bool pathable = true;
+
+    public void updateCost(Cell origin, Cell prev)
+    {
+        if (origin != prevOrigin)
+        {
+            costh = prev.costh + 1;
+            previous = prev;
+            prevOrigin = origin;
+        }
+        else
+        {
+            if (prev.costh + 1 < costh)
+            {
+                previous = prev;
+                costh = prev.costh + 1;
+            }
+        }
+    }
+
+    public int calcHeuristic(Cell target)
+    {
+        // Could cache this to avoid calling so often
+        return Mathf.Abs(position.x - target.position.x) + Mathf.Abs(position.z - target.position.z);
+    }
 }
 
 public class Room : MonoBehaviour
@@ -36,13 +64,13 @@ public class Room : MonoBehaviour
     public Vector3Int originPos;
     public Vector3Int topRight;
 
-    private void Awake()
+    public void Awake()
     {
-        roomGrid = new Cell[width, height];
+        print("ran");
         originPos = Vector3Int.FloorToInt(gameObject.transform.position);
         topRight = originPos + width * Vector3Int.right + height * Vector3Int.forward;
         MakeCells();
-        RoomManager.instance.rooms.Add(this);
+        //RoomManager.rooms.Add(this);
 
         GetChildrenWithTag(transform, "object");
     }
@@ -50,7 +78,7 @@ public class Room : MonoBehaviour
     private void GetChildrenWithTag(Transform parent, string tag) 
     {
         
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < parent.childCount; i++)
         {
             Transform child = parent.GetChild(i);
             if (child.tag == tag)
@@ -68,8 +96,9 @@ public class Room : MonoBehaviour
     {
     }
 
-    private void MakeCells()
+    public void MakeCells()
     {
+        roomGrid = new Cell[width, height];
         Cell last = null;
         for (int i = 0; i < width; i++)
         {
@@ -78,7 +107,7 @@ public class Room : MonoBehaviour
             roomGrid[i, 0] = newCell;
             if (i != 0)
             {
-                newCell.position = last.position + Vector3.right;
+                newCell.position = last.position + Vector3Int.right;
                 last.neighbors[(int)direction.right] = newCell;
                 newCell.neighbors[(int)direction.left] = newCell;
             }
@@ -93,13 +122,30 @@ public class Room : MonoBehaviour
             {
                 Cell upCell = new Cell();
                 roomGrid[i, j] = upCell;
-                upCell.position = last.position + Vector3.forward;
+                upCell.position = last.position + Vector3Int.forward;
                 last.neighbors[(int)direction.down] = upCell;
                 upCell.neighbors[(int)direction.up] = last;
                 last = upCell;
             }
             last = newCell;
         }
+    }
+
+    public Cell GetCell(Vector3 position)
+    {
+        Vector3Int pos = Vector3Int.FloorToInt(position) - originPos;
+        if (Mathf.Abs(pos.x) < width && Mathf.Abs(pos.z) < height)
+        {
+            Cell cell = roomGrid[pos.x, pos.z];
+            Debug.Log(cell.position.x + " " + cell.position.z);
+            return cell;
+        }
+        else
+        {
+            Debug.LogError("An object tried to find its cell in a room it is outside of. You must call GetCell on the correct room.");
+            return null;
+        }
+
     }
 
     private void OnDrawGizmos()
@@ -115,17 +161,12 @@ public class Room : MonoBehaviour
         for (int i = 0; i < obstacles.Count; i++)
         {
             Transform obj = obstacles[i];
-            Vector3Int pos = Vector3Int.FloorToInt(obj.position) - originPos;
-            if (Mathf.Abs(pos.x) < width && Mathf.Abs(pos.z) < height)
+            Cell cell = GetCell(obj.position);
+            if (cell == null)
             {
-                Cell cell = roomGrid[pos.x, pos.z];
-                cell.pathable = false;
-                print("Making cell " + pos.x + "," + pos.z + " unpathable.");
+                return;
             }
-            else
-            {
-                Debug.LogError("The obstacle " + obstacles[i].gameObject.name + " is outside it's room. This is not allowed.");
-            }
+            cell.pathable = false;
         }
     }
 
