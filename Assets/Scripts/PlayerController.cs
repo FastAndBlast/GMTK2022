@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Action { IDLE, UP, RIGHT, DOWN, LEFT, ATTACK, BLOCK }
+enum playerAction { idle, up, right, down, left, attack, block }
 
 public class PlayerController : Entity
 {
-    private List<Action> actions = new List<Action>();
+    private List<playerAction> actions = new List<playerAction>();
 
     private bool horizontalAxisDown = false;
     private bool verticalAxisDown = false;
 
     PlayerAnimation anim;
+
+    public static PlayerController instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     protected override void Start()
     {
@@ -24,14 +31,14 @@ public class PlayerController : Entity
     {
         //Vector2 movementVector = Vector2.zero;
 
-        Action nextAction = Action.IDLE;
+        playerAction nextAction = playerAction.idle;
 
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             if (!horizontalAxisDown)
             {
                 //movementVector = Vector2.right * Input.GetAxisRaw("Vertical");
-                nextAction = Action.DOWN - (int)Input.GetAxisRaw("Horizontal");
+                nextAction = playerAction.down - (int)Input.GetAxisRaw("Horizontal");
             }
             horizontalAxisDown = true;
         }
@@ -45,7 +52,7 @@ public class PlayerController : Entity
             if (!verticalAxisDown)
             {
                 //movementVector = Vector2.up * Input.GetAxisRaw("Vertical");
-                nextAction = Action.RIGHT - (int)Input.GetAxisRaw("Vertical");
+                nextAction = playerAction.right - (int)Input.GetAxisRaw("Vertical");
             }
             verticalAxisDown = true;
         }
@@ -56,10 +63,10 @@ public class PlayerController : Entity
 
         if (Input.GetButtonDown("Attack"))
         {
-            nextAction = Action.ATTACK;
+            nextAction = playerAction.attack;
         }
 
-        if (nextAction != Action.IDLE)
+        if (nextAction != playerAction.idle)
         {
             if (actions.Count < 2)
             {
@@ -71,7 +78,7 @@ public class PlayerController : Entity
             }
         }
 
-        if (actions.Count > 0 && GameManager.currentState == State.WAIT)
+        if (actions.Count > 0 && GameManager.currentState == state.wait)
         {
             GameManager.instance.PlayerMove();
         }
@@ -79,22 +86,22 @@ public class PlayerController : Entity
 
     public override void MovementTick()
     {
-        if (actions.Count > 0) // && actions[0] > Action.IDLE && actions[0] < Action.ATTACK)
+        if (actions.Count > 0) // && actions[0] > playerAction.idle && actions[0] < playerAction.attack)
         {
             // Movement actions
-            if (actions[0] == Action.UP)
+            if (actions[0] == playerAction.up)
             {
                 anim.StartAnimation(Vector2.up);
             }
-            else if (actions[0] == Action.RIGHT)
+            else if (actions[0] == playerAction.right)
             {
                 anim.StartAnimation(Vector2.right);
             }
-            else if (actions[0] == Action.DOWN)
+            else if (actions[0] == playerAction.down)
             {
                 anim.StartAnimation(Vector2.down);
             }
-            else if (actions[0] == Action.LEFT)
+            else if (actions[0] == playerAction.left)
             {
                 anim.StartAnimation(Vector2.left);
             }
@@ -105,18 +112,18 @@ public class PlayerController : Entity
     {
         if (actions.Count > 0)
         {
-            if (actions[0] == Action.ATTACK)
+            if (actions[0] == playerAction.attack)
             {
                 // TODO: IMPLEMENT ATTACK
             }
-            else if (actions[0] == Action.BLOCK)
+            else if (actions[0] == playerAction.block)
             {
                 // TODO: IMPLEMENT BLOCK
             }
         }
     }
 
-    public override void ParticleTick()
+    public override void FinalTick()
     {
         actions.RemoveAt(0);
     }

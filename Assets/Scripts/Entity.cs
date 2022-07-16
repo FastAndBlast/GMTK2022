@@ -19,6 +19,7 @@ public abstract class Entity : MonoBehaviour
     
     }
 
+    public Cell currentCell;
 
     private int maxHealth;
 
@@ -33,7 +34,7 @@ public abstract class Entity : MonoBehaviour
 
     public abstract void ActionTick();
 
-    public abstract void ParticleTick();
+    public abstract void FinalTick();
 
     // On health change event
     public abstract void OnHealthChange(int before, int after);

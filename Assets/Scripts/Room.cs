@@ -15,6 +15,12 @@ public class Cell
     public Cell[] neighbors = new Cell[4];
     // The position is relative to the parent
     public Vector3 position;
+
+    public List<Cell> FindPath(Cell target)
+    {
+        return new List<Cell>();
+        // TODO: IMPLEMENT PATHFINDING
+    }
 }
 
 public class Object
