@@ -15,11 +15,7 @@ public class Cell
     public Cell[] neighbors = new Cell[4];
     // The position is relative to the parent
     public Vector3 position;
-}
-
-public class Object
-{
-    public bool pathable;
+    public bool pathable = true;
 }
 
 public class Room : MonoBehaviour
@@ -27,7 +23,7 @@ public class Room : MonoBehaviour
     public int width;
     public int height;
 
-    private List<Object> contents;
+    private List<Transform> obstacles = new List<Transform>();
 
     public Cell[,] roomGrid;
 
@@ -41,6 +37,25 @@ public class Room : MonoBehaviour
         topRight = originPos + width * Vector3Int.right + height * Vector3Int.forward;
         MakeCells();
         RoomManager.instance.rooms.Add(this);
+
+        GetChildrenWithTag(transform, "object");
+    }
+
+    private void GetChildrenWithTag(Transform parent, string tag) 
+    {
+        
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = parent.GetChild(i);
+            if (child.tag == tag)
+            {
+                obstacles.Add(child);
+            }
+            if (child.childCount > 0)
+            {
+                GetChildrenWithTag(child, tag);
+            }
+        }
     }
 
     private void Start()
@@ -87,6 +102,25 @@ public class Room : MonoBehaviour
         Vector3 centre = new Vector3(originPos.x + (float)width / 2, 1, originPos.z + (float)height / 2);
         Vector3Int size = new Vector3Int(width, 2, height);
         Gizmos.DrawWireCube(centre, size);
+    }
+
+    public void SetPathability()
+    {
+        for (int i = 0; i < obstacles.Count; i++)
+        {
+            Transform obj = obstacles[i];
+            Vector3Int pos = Vector3Int.FloorToInt(obj.position) - originPos;
+            if (Mathf.Abs(pos.x) < width && Mathf.Abs(pos.z) < height)
+            {
+                Cell cell = roomGrid[pos.x, pos.z];
+                cell.pathable = false;
+                print("Making cell " + pos.x + "," + pos.z + " unpathable.");
+            }
+            else
+            {
+                Debug.LogError("The obstacle " + obstacles[i].gameObject.name + " is outside it's room. This is not allowed.");
+            }
+        }
     }
 
     public void JoinRooms(Room other)

@@ -23,6 +23,7 @@ public class RoomManager : MonoBehaviour
                 {
                     continue;
                 }
+                rooms[i].SetPathability();
                 rooms[i].JoinRooms(rooms[j]);
             }
         }
