@@ -13703,6 +13703,14 @@ PrefabInstance:
       propertyPath: requiredNumber
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1356460470}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Open
+      objectReference: {fileID: 0}
     - target: {fileID: 2193965042087473776, guid: 089d1ff54a554464d851fa543cd94a1a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -24781,6 +24789,14 @@ PrefabInstance:
       propertyPath: requiredNumber
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1678403678}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Open
+      objectReference: {fileID: 0}
     - target: {fileID: 2193965042087473776, guid: 089d1ff54a554464d851fa543cd94a1a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -30458,6 +30474,14 @@ PrefabInstance:
       propertyPath: requiredNumber
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 598931954}
+    - target: {fileID: 1163641090, guid: 089d1ff54a554464d851fa543cd94a1a, type: 3}
+      propertyPath: onPress.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Open
+      objectReference: {fileID: 0}
     - target: {fileID: 2193965042087473776, guid: 089d1ff54a554464d851fa543cd94a1a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -30531,41 +30555,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1028715891}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1028715893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4155849828028608504, guid: 089d1ff54a554464d851fa543cd94a1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1028715891}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1028715894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028715893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39047f3117402544e96dcc5d40cc131b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onPress:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Door, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  requiredNumber: 3
-  triggerMultipleTimes: 0
 --- !u!1001 &1029032271
 PrefabInstance:
   m_ObjectHideFlags: 0
