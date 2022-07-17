@@ -36,6 +36,10 @@ public abstract class Entity : MonoBehaviour
 
     public abstract void FinalTick();
 
+    public abstract void GetHit(Entity entity, int damage);
+
+    public abstract void GetHit(Vector2 dir, int damage);
+
     // On health change event
     public abstract void OnHealthChange(int before, int after);
 }

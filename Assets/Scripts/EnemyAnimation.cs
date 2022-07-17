@@ -6,11 +6,16 @@ public class EnemyAnimation : MonoBehaviour
 {
     private Animator anim;
 
+    [Header("Moving")]
+
     public Transform rootTransform;
 
     public float timeLength = 0.25f;
 
-    private bool moving;
+    [Header("Knockback")]
+    public float knockbackTime = 0.5f;
+
+    private int playing = 0;
 
     private float curTime = 1f;
 
@@ -26,7 +31,7 @@ public class EnemyAnimation : MonoBehaviour
 
     private void Update()
     {
-        if (moving)
+        if (playing == 1)
         {
             rootTransform.position = Vector3.Lerp(originalPosition, targetPosition, (timeLength - curTime) / timeLength);
 
@@ -36,7 +41,22 @@ public class EnemyAnimation : MonoBehaviour
             }
             else
             {
-                moving = false;
+                playing = 0;
+            }
+        }
+        else if (playing == 2)
+        {
+            float timeSinceStart = knockbackTime - curTime;
+            rootTransform.position = Vector3.Lerp(originalPosition, targetPosition, (1 - Mathf.Pow(1 - (timeSinceStart / knockbackTime), 2)));
+
+            if (curTime > 0)
+            {
+                curTime -= Time.deltaTime;
+            }
+            else
+            {
+                playing = 0;
+                rootTransform.transform.position = targetPosition;
             }
         }
     }
@@ -51,7 +71,7 @@ public class EnemyAnimation : MonoBehaviour
 
     public void StartMove(Vector3 newPosition)
     {
-        moving = true;
+        playing = 1;
         curTime = timeLength;
 
         originalPosition = rootTransform.position;
@@ -85,6 +105,36 @@ public class EnemyAnimation : MonoBehaviour
         anim.SetBool("isWalking", true);
         anim.SetBool("isIdle", false);
         anim.SetBool("isHit", false);
+    }
+
+    public void StartKnockback(Vector2 dir, int length)
+    {
+        playing = 2;
+        curTime = knockbackTime;
+
+        originalPosition = rootTransform.position;
+
+        if (dir == Vector2.up)
+        {
+            targetPosition = rootTransform.position + Vector3.forward * length;
+            //targetRotation = rootTransform.eulerAngles + Vector3.right * 90;
+        }
+        else if (dir == Vector2.right)
+        {
+            targetPosition = rootTransform.position + Vector3.right * length;
+            //targetRotation = rootTransform.eulerAngles - Vector3.forward * 90;
+        }
+        else if (dir == Vector2.down)
+        {
+            targetPosition = rootTransform.position + Vector3.back * length;
+
+            //targetRotation = rootTransform.eulerAngles - Vector3.right * 90;
+        }
+        else
+        {
+            targetPosition = rootTransform.position + Vector3.left * length;
+            //targetRotation = rootTransform.eulerAngles + Vector3.forward * 90;
+        }
     }
 
     public void StartIdle()
