@@ -92,7 +92,6 @@ public class Room : MonoBehaviour
 
     private void GetChildrenWithTag(Transform parent, string tag) 
     {
-        
         for (int i = 0; i < parent.childCount; i++)
         {
             Transform child = parent.GetChild(i);
