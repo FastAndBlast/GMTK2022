@@ -331,6 +331,7 @@ public class PlayerController : Entity
         {
             MoveCell(targetCell);
             anim.StartKnockback(vecDir, length);
+            anim.StartBlock();
         }
 
         Health -= damage;
@@ -378,6 +379,7 @@ public class PlayerController : Entity
             MoveCell(targetCell);
             print(targetCell.position);
             anim.StartKnockback(vecDir, length);
+            anim.StartBlock();
         }
 
         Health -= damage;

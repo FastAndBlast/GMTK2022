@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using TMPro;
 
 public enum enemyAction { move, windup, attack }
 
@@ -41,6 +42,11 @@ public class EnemyAI : Entity
     public override void Start()
     {
         // blank
+        if ((int)attackCondition > 0 && (int)attackCondition < 7)
+        {
+            GetComponentInChildren<TextMeshPro>().text = ((int)attackCondition).ToString();
+            print(GetComponentInChildren<TextMeshPro>().text);
+        }
     }
 
     public void ReAwake()

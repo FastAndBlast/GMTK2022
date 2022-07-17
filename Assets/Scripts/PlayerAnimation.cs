@@ -138,7 +138,7 @@ public class PlayerAnimation : MonoBehaviour
         TrackHorizontalPosition.instance.StartAttack();
     }
 
-    public void StartBlock(Vector2 direction)
+    public void StartBlock()// Vector2 direction)
     {
         TrackHorizontalPosition.instance.StartBlock();
     }
