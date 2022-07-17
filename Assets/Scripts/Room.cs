@@ -83,6 +83,11 @@ public class Room : MonoBehaviour
         RoomManager.rooms.Add(this);
 
         GetChildrenWithTag(transform, "object");
+        Spikes[] spikes = GetComponentsInChildren<Spikes>();
+        foreach (Spikes spike in spikes)
+        {
+            spike.cell = GetCell(spike.transform.position);
+        }
     }
 
     private void GetChildrenWithTag(Transform parent, string tag) 
@@ -156,7 +161,11 @@ public class Room : MonoBehaviour
         if (pos.x >= 0 && pos.z >= 0 && pos.x < width && pos.z < height)
         {
             Cell cell = roomGrid[pos.x, pos.z];
+<<<<<<< HEAD
             //Debug.Log(cell.position.x + " " + cell.position.z);
+=======
+            // Debug.Log(cell.position.x + " " + cell.position.z);
+>>>>>>> 788533f (Updating tutorial)
             return cell;
         }
         else
@@ -181,7 +190,7 @@ public class Room : MonoBehaviour
         {
             Transform obj = obstacles[i];
             Cell cell = GetCell(obj.position);
-            print("Making cell " + obj.position.x + "," + obj.position.z + " unpathable.");
+            // print("Making cell " + obj.position.x + "," + obj.position.z + " unpathable.");
             if (cell == null)
             {
                 return;
