@@ -93,14 +93,6 @@ public class PlayerController : Entity
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Health--;
-            print("Health changed: " + Health);
-        }
-
-        //Vector2 movementVector = Vector2.zero;
-
         playerAction nextAction = playerAction.idle;
 
         if (Input.GetAxisRaw("Horizontal") != 0)

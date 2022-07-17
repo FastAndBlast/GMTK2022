@@ -15,20 +15,29 @@ public class HealthUI : MonoBehaviour
 
     public void UpdateUI(int newAmount)
     {
-        /*
+        
         for (int i = 0; i < 3; i++)
         {
             if (i < newAmount)
             {
-                if (i > currentHealth)
+                if (i > currentHealth - 1)
                 {
-
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("HasHealed", true);
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("BoneBreak", false);
                 }
             }
+            else
+            {
+                if (i < currentHealth)
+                {
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("HasHealed", false);
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("BoneBreak", true);
+                }
+            }
+            
         }
-        */
-        print(newAmount);
 
+        /*
         if (currentHealth > newAmount)
         {
             for (int i = currentHealth; i < newAmount; i++)
@@ -45,6 +54,7 @@ public class HealthUI : MonoBehaviour
                 transform.GetChild(i).GetComponent<Animator>().SetBool("BoneBreak", true);
             }
         }
+        */
 
         currentHealth = newAmount;
     }
