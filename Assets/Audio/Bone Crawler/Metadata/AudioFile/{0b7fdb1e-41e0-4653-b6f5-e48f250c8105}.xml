@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{0b7fdb1e-41e0-4653-b6f5-e48f250c8105}">
+		<property name="assetPath">
+			<value>zapsplat_cartoon_monster_growl_funny_005_75410.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.8480000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{4be1ee55-e872-4d0a-b302-4e2269934b89}</destination>
+		</relationship>
+	</object>
+</objects>
