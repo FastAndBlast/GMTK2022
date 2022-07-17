@@ -11,7 +11,9 @@ public class EnemyAI : Entity
 
     public int damage;
 
-    public enemyAction nextAction;
+    public Transform attackIndicators;
+
+    public enemyAction nextAction = enemyAction.move;
 
     //[HideInInspector]
     private float windupLeft = 3;
@@ -32,12 +34,17 @@ public class EnemyAI : Entity
         base.Start();
 
         currentCell = GetComponentInParent<Room>().GetCell(transform.position);
+        currentCell.pathable = false;
+
+        print(currentCell.position);
     }
 
     public override void MovementTick()
     {
         if (nextAction == enemyAction.move)
         {
+            //print(Health);
+
             if (Health < 1)
             {
                 return;
@@ -45,14 +52,21 @@ public class EnemyAI : Entity
 
             List<Cell> path = currentCell.FindPath(PlayerController.instance.currentCell);
 
-            if (path.Count == 0)
+            //print(currentCell);
+            //print(currentCell.position);
+
+            if (path == null)
             {
                 return;
             }
 
-            MoveCell(path[1]);
+            if (path[1].pathable)
+            {
+                MoveCell(path[1]);
 
-            anim.StartMove(currentCell.position);
+                anim.StartMove(currentCell.position + new Vector3(0.5f, 0, 0.5f));
+            }
+            //print(currentCell.position);
         }
     }
 
@@ -88,24 +102,30 @@ public class EnemyAI : Entity
                 }
             }
 
+            anim.StartAttack();
+
             if (adjacentCell != null)
             {
                 //PlayerController.instance.Health -= 1;
                 PlayerController.instance.GetHit(this, damage);
-                
             }
 
             nextAction = enemyAction.move;
+        }
+
+        if (Vector3.Distance(currentCell.position, PlayerController.instance.currentCell.position) <= 1)
+        {
+            EnableAttackIndicators();
         }
     }
 
     public override void FinalTick()
     {
+        DisableAttackIndicators();
         if (Health < 1)
         {
             // THIS IS WHERE YOU DIE
-            GameManager.entities.Remove(this);
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
 
@@ -115,20 +135,68 @@ public class EnemyAI : Entity
             if (windupLeft < 1)
             {
                 nextAction = enemyAction.attack;
+                print("??? NANI");
+                EnableAttackIndicators();
             }
         }
         else
         {
             //anim.Face(Vector2.up);
-            if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) < 2)
+            if (Vector3.Distance(currentCell.position, PlayerController.instance.currentCell.position) <= 1)
             {
                 nextAction = enemyAction.attack;
+                EnableAttackIndicators();
             }
         }
 
         anim.StartIdle();
 
         //Display whatever action is gonna happen
+    }
+
+    public void DisableAttackIndicators()
+    {
+        foreach (Transform child in attackIndicators)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableAttackIndicators()
+    {
+        print(GameManager.currentState);
+        if (currentCell.neighbors[(int)direction.up] != null)
+        {
+            attackIndicators.Find("Up").gameObject.SetActive(true);
+        }
+        else
+        {
+            attackIndicators.Find("Up").gameObject.SetActive(false);
+        }
+        if (currentCell.neighbors[(int)direction.right] != null)
+        {
+            attackIndicators.Find("Right").gameObject.SetActive(true);
+        }
+        else
+        {
+            attackIndicators.Find("Right").gameObject.SetActive(false);
+        }
+        if (currentCell.neighbors[(int)direction.down] != null)
+        {
+            attackIndicators.Find("Down").gameObject.SetActive(true);
+        }
+        else
+        {
+            attackIndicators.Find("Down").gameObject.SetActive(false);
+        }
+        if (currentCell.neighbors[(int)direction.left] != null)
+        {
+            attackIndicators.Find("Left").gameObject.SetActive(true);
+        }
+        else
+        {
+            attackIndicators.Find("Left").gameObject.SetActive(false);
+        }
     }
 
     public override void GetHit(Entity entity, int damage)
@@ -171,6 +239,8 @@ public class EnemyAI : Entity
             MoveCell(targetCell);
             anim.StartKnockback(vecDir, length);
         }
+
+        nextAction = enemyAction.move;
     }
 
     public override void GetHit(Vector2 vecDir, int damage)
@@ -213,6 +283,8 @@ public class EnemyAI : Entity
             MoveCell(targetCell);
             anim.StartKnockback(vecDir, length);
         }
+
+        nextAction = enemyAction.move;
     }
 
     IEnumerator Disable()
@@ -226,6 +298,7 @@ public class EnemyAI : Entity
 
         anim.ResetAnim();
         gameObject.SetActive(false);
+        yield break;
     }
 
     public override void OnHealthChange(int before, int after)
@@ -237,7 +310,7 @@ public class EnemyAI : Entity
             anim.StartHit();
         }
 
-        if (Health < 1)
+        if (after < 1)
         {
             // DEAD
             anim.StartDie();

@@ -13,6 +13,8 @@ public class PlayerController : Entity
 
     PlayerAnimation anim;
 
+    public int damage;
+
     public Room startingRoom;
 
     public static PlayerController instance;
@@ -21,6 +23,7 @@ public class PlayerController : Entity
     public Transform rotationAfterAnimation;
 
     //private int number;
+    private Entity target;
 
     public int number
     {
@@ -65,7 +68,10 @@ public class PlayerController : Entity
 
     protected override void Start()
     {
-        base.Start();
+        health = maxHealth;
+
+        GameManager.entities.Insert(0, this);
+
         anim = GetComponent<PlayerAnimation>();
 
         //currentCell.neighbors = new Cell[4] { currentCell, currentCell, currentCell, currentCell };
@@ -140,36 +146,78 @@ public class PlayerController : Entity
             // Movement actions
             if (actions[0] == playerAction.up)
             {
-                if (currentCell.neighbors[(int)direction.up] != null && currentCell.neighbors[(int)direction.up].pathable)
+                if (currentCell.neighbors[(int)direction.up] != null)
                 {
-                    MoveCell(currentCell.neighbors[(int)direction.up]);
-                    anim.StartMove(Vector2.up);
-                    
-                    //GetHit(Vector2.up, 0);
+                    if (currentCell.neighbors[(int)direction.up].pathable)
+                    {
+                        MoveCell(currentCell.neighbors[(int)direction.up]);
+                        anim.StartMove(Vector2.up);
+                    }
+                    else
+                    {
+                        Entity enemy = GetEnemyAtCell(currentCell.neighbors[(int)direction.up]);
+                        if (enemy != null)
+                        {
+                            target = enemy;
+                        }
+                    }
                 }
             }
             else if (actions[0] == playerAction.right)
             {
-                if (currentCell.neighbors[(int)direction.right] != null && currentCell.neighbors[(int)direction.right].pathable)
+                if (currentCell.neighbors[(int)direction.right] != null)
                 {
-                    MoveCell(currentCell.neighbors[(int)direction.right]);
-                    anim.StartMove(Vector2.right);
+                    if (currentCell.neighbors[(int)direction.right].pathable)
+                    {
+                        MoveCell(currentCell.neighbors[(int)direction.right]);
+                        anim.StartMove(Vector2.right);
+                    }
+                    else
+                    {
+                        Entity enemy = GetEnemyAtCell(currentCell.neighbors[(int)direction.right]);
+                        if (enemy != null)
+                        {
+                            target = enemy;
+                        }
+                    }
                 }
             }
             else if (actions[0] == playerAction.down)
             {
-                if (currentCell.neighbors[(int)direction.down] != null && currentCell.neighbors[(int)direction.down].pathable)
+                if (currentCell.neighbors[(int)direction.down] != null)
                 {
-                    MoveCell(currentCell.neighbors[(int)direction.down]);
-                    anim.StartMove(Vector2.down);
+                    if (currentCell.neighbors[(int)direction.down].pathable)
+                    {
+                        MoveCell(currentCell.neighbors[(int)direction.down]);
+                        anim.StartMove(Vector2.down);
+                    }
+                    else
+                    {
+                        Entity enemy = GetEnemyAtCell(currentCell.neighbors[(int)direction.down]);
+                        if (enemy != null)
+                        {
+                            target = enemy;
+                        }
+                    }
                 }
             }
             else if (actions[0] == playerAction.left)
             {
-                if (currentCell.neighbors[(int)direction.left] != null && currentCell.neighbors[(int)direction.left].pathable)
+                if (currentCell.neighbors[(int)direction.left] != null)
                 {
-                    MoveCell(currentCell.neighbors[(int)direction.left]);
-                    anim.StartMove(Vector2.left);
+                    if (currentCell.neighbors[(int)direction.left].pathable)
+                    {
+                        MoveCell(currentCell.neighbors[(int)direction.left]);
+                        anim.StartMove(Vector2.left);
+                    }
+                    else
+                    {
+                        Entity enemy = GetEnemyAtCell(currentCell.neighbors[(int)direction.left]);
+                        if (enemy != null)
+                        {
+                            target = enemy;
+                        }
+                    }
                 }
             }
 
@@ -181,6 +229,14 @@ public class PlayerController : Entity
     {
         if (actions.Count > 0)
         {
+            if (target != null)
+            {
+                anim.StartAttack(target);
+                target.GetHit(this, damage);
+                target = null;
+            }
+            
+            /*
             if (actions[0] == playerAction.attack)
             {
                 // TODO: IMPLEMENT ATTACK
@@ -189,6 +245,7 @@ public class PlayerController : Entity
             {
                 // TODO: IMPLEMENT BLOCK
             }
+            */
         }
     }
 
@@ -198,6 +255,21 @@ public class PlayerController : Entity
         {
             actions.RemoveAt(0);
         }
+    }
+
+    public Entity GetEnemyAtCell(Cell cell)
+    {
+        Entity entity = null;
+
+        for (int i = 1; i < GameManager.entities.Count; i++)
+        {
+            if (GameManager.entities[i].currentCell == cell)
+            {
+                entity = GameManager.entities[i];
+            }
+        }
+
+        return entity;
     }
 
     public override void GetHit(Entity entity, int damage)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    private int health;
+    protected int health;
     public int Health
     {
         get
@@ -21,11 +21,11 @@ public abstract class Entity : MonoBehaviour
 
     public Cell currentCell;
 
-    private int maxHealth;
+    public int maxHealth;
 
     protected virtual void Start()
     {
-        maxHealth = health;
+        health = maxHealth;
 
         GameManager.entities.Add(this);
     }

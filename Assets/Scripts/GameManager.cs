@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     public float stateChangeTimer = 5f;
 
+    public float movementTime;
+    public float actionTime;
+    public float waitTime;
+
     private void Awake()
     {
         instance = this;
@@ -33,8 +37,9 @@ public class GameManager : MonoBehaviour
                 foreach (Entity entity in entities)
                 {
                     entity.MovementTick();
+                    print(entity.name);
                 }
-                stateChangeTimer = 0.25f;
+                stateChangeTimer = movementTime;
             }
             else if (currentState == state.movement)
             {
@@ -43,22 +48,25 @@ public class GameManager : MonoBehaviour
                 {
                     entity.ActionTick();
                 }
-                stateChangeTimer = 0.5f;
+                stateChangeTimer = actionTime;
             }
             else if (currentState == state.action)
             {
-                currentState = state.final;
+                currentState = state.wait;
                 foreach (Entity entity in entities)
                 {
                     entity.FinalTick();
                 }
-                stateChangeTimer = 0f;
+                stateChangeTimer = waitTime;
             }
             else
             {
                 currentState = state.wait;
-                stateChangeTimer = 5f;
+                stateChangeTimer = waitTime;
             }
+
+            //print("STATE CHANGED: " + currentState);
+            //print("STATE TIMER: " + stateChangeTimer);
         }
     }
 
@@ -69,6 +77,6 @@ public class GameManager : MonoBehaviour
         {
             entity.MovementTick();
         }
-        stateChangeTimer = 0.25f;
+        stateChangeTimer = movementTime;
     }
 }

@@ -9,8 +9,9 @@ public class EnemyAnimation : MonoBehaviour
     [Header("Moving")]
 
     public Transform rootTransform;
+    public Transform rotatationRootTransform;
 
-    public float timeLength = 0.25f;
+    public float moveTime = 0.25f;
 
     [Header("Knockback")]
     public float knockbackTime = 0.5f;
@@ -23,17 +24,43 @@ public class EnemyAnimation : MonoBehaviour
 
     private Vector3 targetPosition;
 
+    private EnemyAI script;
+
+    private float lookTimer = 0f;
+
+    private Vector3 originalDirection;
+
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         originalPosition = rootTransform.position;
+
+        moveTime = GameManager.instance.movementTime;
+        knockbackTime = GameManager.instance.actionTime;
+        script = GetComponent<EnemyAI>();
     }
 
     private void Update()
     {
+        if ((GameManager.currentState == state.movement && script.nextAction == enemyAction.attack))
+        {
+            lookTimer = 1.15f;
+            originalDirection = rotatationRootTransform.forward;
+        }
+
+        lookTimer -= Time.deltaTime;
+        if (lookTimer <= 0)
+        {
+            Vector3 targetDirection =
+            new Vector3(PlayerController.instance.transform.position.x, 0, PlayerController.instance.transform.position.z) -
+            new Vector3(rootTransform.position.x, 0, rootTransform.position.z);
+
+            rotatationRootTransform.forward = Vector3.Slerp(originalDirection, targetDirection, -lookTimer * 4);
+        }
+
         if (playing == 1)
         {
-            rootTransform.position = Vector3.Lerp(originalPosition, targetPosition, (timeLength - curTime) / timeLength);
+            rootTransform.position = Vector3.Lerp(originalPosition, targetPosition, (moveTime - curTime) / moveTime);
 
             if (curTime > 0)
             {
@@ -41,7 +68,9 @@ public class EnemyAnimation : MonoBehaviour
             }
             else
             {
+                rootTransform.position = targetPosition;
                 playing = 0;
+                StartIdle();
             }
         }
         else if (playing == 2)
@@ -57,6 +86,8 @@ public class EnemyAnimation : MonoBehaviour
             {
                 playing = 0;
                 rootTransform.transform.position = targetPosition;
+                //rootTransform.transform.position = 
+                StartIdle();
             }
         }
     }
@@ -101,11 +132,12 @@ public class EnemyAnimation : MonoBehaviour
     public void StartMove(Vector3 newPosition)
     {
         playing = 1;
-        curTime = timeLength;
+        curTime = moveTime;
 
         originalPosition = rootTransform.position;
 
         targetPosition = newPosition;
+        targetPosition.y = originalPosition.y;
         Vector3 dir = (newPosition - targetPosition).normalized;
 
         //rootTransform.forward = dir;
@@ -164,6 +196,8 @@ public class EnemyAnimation : MonoBehaviour
             targetPosition = rootTransform.position + Vector3.left * length;
             //targetRotation = rootTransform.eulerAngles + Vector3.forward * 90;
         }
+
+        targetPosition.y = originalPosition.y;
     }
 
     public void StartIdle()

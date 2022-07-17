@@ -34,6 +34,9 @@ public class PlayerAnimation : MonoBehaviour
     private void Start()
     {
         originalScale = rootTransform.localScale;
+
+        moveTime = GameManager.instance.movementTime;
+        knockbackTime = GameManager.instance.actionTime;
     }
 
     public void StartMove(Vector2 direction)
@@ -41,6 +44,8 @@ public class PlayerAnimation : MonoBehaviour
         //transform.position += Vector3.one;
         playing = 1;
         curTime = moveTime;
+
+        print(moveTime);
 
         originalPosition = rootTransform.position;
         originalRotation = rootTransform.rotation; //rootTransform.eulerAngles;
@@ -128,6 +133,16 @@ public class PlayerAnimation : MonoBehaviour
             //targetRotation = rootTransform.eulerAngles + Vector3.forward * 90;
         }
 
+    }
+
+    public void StartAttack(Entity target)
+    {
+        TrackHorizontalPosition.instance.StartAttack();
+    }
+
+    public void StartBlock(Vector2 direction)
+    {
+        TrackHorizontalPosition.instance.StartBlock();
     }
 
     private void Update() {

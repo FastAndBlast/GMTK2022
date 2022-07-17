@@ -8,6 +8,6 @@ public class LookAtCamera : MonoBehaviour
 
     private void Update()
     {
-        transform.forward = Camera.main.transform.position - transform.position;
+        transform.forward = transform.position - Camera.main.transform.position;
     }
 }
