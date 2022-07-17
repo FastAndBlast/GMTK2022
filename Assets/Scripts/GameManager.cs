@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public static List<Spikes> spikes = new List<Spikes>();
 
     public static List<Entity> flush = new List<Entity>();
+    public static List<Entity> addQueue = new List<Entity>();
 
     public static state currentState = state.wait;
 
@@ -77,16 +78,26 @@ public class GameManager : MonoBehaviour
                 stateChangeTimer = waitTime;
             }
 
-            foreach (Entity entity in flush)
-            {
-                entities.Remove(entity);
-            }
-
-            flush = new List<Entity>();
-
             //print("STATE CHANGED: " + currentState);
             //print("STATE TIMER: " + stateChangeTimer);
         }
+
+        foreach (Entity entity in flush)
+        {
+            entities.Remove(entity);
+        }
+
+        flush = new List<Entity>();
+
+        foreach (Entity entity in addQueue)
+        {
+            if (!entities.Contains(entity))
+            {
+                entities.Add(entity);
+            }
+        }
+
+        addQueue = new List<Entity>();
     }
 
     public void PlayerMove()

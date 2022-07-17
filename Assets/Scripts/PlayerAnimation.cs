@@ -17,7 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     [Header("Knockback")]
     public float knockbackTime = 0.5f;
 
-    private int playing;
+    public int playing;
 
     private float curTime = 1f;
 

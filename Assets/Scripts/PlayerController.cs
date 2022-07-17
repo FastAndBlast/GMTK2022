@@ -248,7 +248,7 @@ public class PlayerController : Entity
             if (target != null)
             {
                 target.GetHit(this, damage);
-                //RuntimeManager.PlayOneShot("event:/Cube/Cube_Attack_Hit");
+                RuntimeManager.PlayOneShot("event:/Cube/Cube_Attack_Hit");
                 target = null;
             }
             
@@ -290,8 +290,6 @@ public class PlayerController : Entity
 
     public override void GetHit(Entity entity, int damage)
     {
-        Health -= damage;
-
         Vector3 vecDir = (currentCell.position - entity.currentCell.position);
 
         if (vecDir.magnitude > 1)
@@ -333,12 +331,12 @@ public class PlayerController : Entity
             MoveCell(targetCell);
             anim.StartKnockback(vecDir, length);
         }
+
+        Health -= damage;
     }
 
     public override void GetHit(Vector2 vecDir, int damage)
     {
-        Health -= damage;
-
         //Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
         //vecDir.y = vecDir.z;
@@ -380,6 +378,8 @@ public class PlayerController : Entity
             print(targetCell.position);
             anim.StartKnockback(vecDir, length);
         }
+
+        Health -= damage;
     }
 
     public override void OnHealthChange(int before, int after)
@@ -396,7 +396,12 @@ public class PlayerController : Entity
     private void respawn()
     {
         MoveCell(spawnPoint);
-        transform.position = currentCell.position;
+        Vector3 newPosition = currentCell.position + new Vector3(0.5f, 0, 0.5f);
+        newPosition.y = transform.position.y;
+        transform.position = newPosition;
+        anim.playing = 0;
+        actions = new List<playerAction>();
+
         if (maxHealth > 0)
         {
             Health = maxHealth;

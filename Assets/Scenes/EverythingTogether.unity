@@ -5418,7 +5418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   windupLength: 2
-  damage: 0
+  damage: 1
   attackIndicators: {fileID: 2074036663}
   attackCondition: 7
   nextAction: 0
@@ -5614,7 +5614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55479160102c92e4a99b785e5dedc564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 1
   damage: 1
   startingRoom: {fileID: 1567357110}
   rotationAfterAnimation: {fileID: 0}

@@ -46,10 +46,7 @@ public class EnemyAI : Entity
     public void ReAwake()
     {
         base.Start();
-
-        
-
-        print(currentCell.position);
+        nextAction = enemyAction.move;
     }
 
     public override void MovementTick()
@@ -138,7 +135,8 @@ public class EnemyAI : Entity
         DisableAttackIndicators();
         if (Health < 1)
         {
-            GameManager.entities.Remove(this);
+            //GameManager.entities.Remove(this);
+            GameManager.flush.Add(this);
             gameObject.SetActive(false);
             return;
         }
