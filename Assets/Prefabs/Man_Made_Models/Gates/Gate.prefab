@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1416134214487879245}
   - component: {fileID: 6030969704896496622}
   m_Layer: 0
-  m_Name: GateSpike
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4527863662798622293}
   - component: {fileID: 4527863662798622292}
-  - component: {fileID: 2025280835396865345}
+  - component: {fileID: 833427992}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -222,7 +222,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2025280835396865345
+--- !u!114 &833427992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToOpen: 0.5
-  endY: 0
+  endY: -1.3
 --- !u!1 &6376658915377892727
 GameObject:
   m_ObjectHideFlags: 0

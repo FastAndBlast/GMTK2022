@@ -15,16 +15,18 @@ public class Spikes : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void ActionTick()
+    public bool FinalTick()
     {
         for (int i = 0; i < GameManager.entities.Count; i++)
         {
             Entity entity = GameManager.entities[i];
             if (entity.currentCell == cell)
             {
-                entity.GetHit(direction, 1);
                 print("Spikes hitting " + entity.gameObject.name);
+                entity.GetHit(direction, 1);
+                return true;
             }
         }
+        return false;
     }
 }

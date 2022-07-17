@@ -42,20 +42,22 @@ public class EnemyAnimation : MonoBehaviour
 
     private void Update()
     {
-        if ((GameManager.currentState == state.movement && script.nextAction == enemyAction.attack))
+        if (script)
         {
-            lookTimer = 1.15f;
-            originalDirection = rotatationRootTransform.forward;
-        }
+            if ((GameManager.currentState == state.movement && script.nextAction == enemyAction.attack))
+            {
+                lookTimer = 1.15f;
+                originalDirection = rotatationRootTransform.forward;
+            }
+            lookTimer -= Time.deltaTime;
+            if (lookTimer <= 0)
+            {
+                Vector3 targetDirection =
+                new Vector3(PlayerController.instance.transform.position.x, 0, PlayerController.instance.transform.position.z) -
+                new Vector3(rootTransform.position.x, 0, rootTransform.position.z);
 
-        lookTimer -= Time.deltaTime;
-        if (lookTimer <= 0)
-        {
-            Vector3 targetDirection =
-            new Vector3(PlayerController.instance.transform.position.x, 0, PlayerController.instance.transform.position.z) -
-            new Vector3(rootTransform.position.x, 0, rootTransform.position.z);
-
-            rotatationRootTransform.forward = Vector3.Slerp(originalDirection, targetDirection, -lookTimer * 4);
+                rotatationRootTransform.forward = Vector3.Slerp(originalDirection, targetDirection, -lookTimer * 4);
+            }
         }
 
         if (playing == 1)

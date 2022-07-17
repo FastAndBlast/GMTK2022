@@ -11,6 +11,7 @@ public class PressurePlate : MonoBehaviour
     public int requiredNumber;
 
     Cell cell;
+    public bool triggerMultipleTimes;
 
     bool invoked = false;
 
@@ -36,6 +37,10 @@ public class PressurePlate : MonoBehaviour
                     cell.room.segment.spawnEnemies();
                 }
             }
+        }
+        if (PlayerController.instance.currentCell != cell && triggerMultipleTimes)
+        {
+            invoked = false;
         }
     }
 

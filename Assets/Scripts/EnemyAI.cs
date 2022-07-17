@@ -142,8 +142,8 @@ public class EnemyAI : Entity
         if (Health < 1)
         {
             //GameManager.entities.Remove(this);
-            GameManager.flush.Add(this);
-            gameObject.SetActive(false);
+            // GameManager.flush.Add(this);
+            // gameObject.SetActive(false);
             return;
         }
 

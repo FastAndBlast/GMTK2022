@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public float movementTime;
     public float actionTime;
     public float waitTime;
+    public float finalTime;
 
     private void Awake()
     {
@@ -57,20 +58,32 @@ public class GameManager : MonoBehaviour
                 {
                     entity.ActionTick();
                 }
-                foreach (Spikes spike in spikes)
-                {
-                    spike.ActionTick();
-                }
                 stateChangeTimer = actionTime;
             }
             else if (currentState == state.action)
             {
-                currentState = state.wait;
+                currentState = state.final;
                 foreach (Entity entity in entities)
                 {
                     entity.FinalTick();
                 }
-                stateChangeTimer = waitTime;
+                bool fired = false;
+                foreach (Spikes spike in spikes)
+                {
+                    if (spike.FinalTick())
+                    {
+                        fired = true;
+                    }
+                }
+                if (fired)
+                {
+                    stateChangeTimer = finalTime;
+                }
+                else
+                {
+                    currentState = state.wait;
+                    stateChangeTimer = waitTime;
+                }
             }
             else
             {
