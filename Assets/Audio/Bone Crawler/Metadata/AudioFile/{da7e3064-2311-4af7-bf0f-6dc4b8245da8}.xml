@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{da7e3064-2311-4af7-bf0f-6dc4b8245da8}">
+		<property name="assetPath">
+			<value>Bone_Walk_3.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.47999999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{4be1ee55-e872-4d0a-b302-4e2269934b89}</destination>
+		</relationship>
+	</object>
+</objects>
