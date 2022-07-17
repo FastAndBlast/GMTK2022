@@ -8,13 +8,17 @@ public class Segment : MonoBehaviour
     public EnemyAI[] enemies;
     public Cell[] spwanPoints;
     // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         rooms = GetComponentsInChildren<Room>();
         for (int i = 0; i < rooms.Length; i++)
         {
             rooms[i].segment = this;
         }
+    }
+    void Start()
+    {
         enemies = GetComponentsInChildren<EnemyAI>(true);
 
         spwanPoints = new Cell[enemies.Length];

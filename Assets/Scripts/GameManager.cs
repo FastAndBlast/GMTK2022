@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                 foreach (Entity entity in entities)
                 {
                     entity.MovementTick();
-                    print(entity.name);
+                    // print(entity.name);
                 }
                 stateChangeTimer = movementTime;
             }
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         foreach (Entity entity in entities)
         {
             entity.MovementTick();
-            print(entity.name);
+            // print(entity.name);
         }
         stateChangeTimer = movementTime;
     }
