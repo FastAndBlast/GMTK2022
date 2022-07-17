@@ -29,7 +29,7 @@ public class EnemyAI : Entity
         anim = GetComponent<EnemyAnimation>();
     }
 
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
 
@@ -124,8 +124,8 @@ public class EnemyAI : Entity
         DisableAttackIndicators();
         if (Health < 1)
         {
-            // THIS IS WHERE YOU DIE
-            //Destroy(gameObject);
+            GameManager.entities.Remove(this);
+            gameObject.SetActive(false);
             return;
         }
 

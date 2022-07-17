@@ -22,6 +22,8 @@ public class PlayerController : Entity
     [HideInInspector]
     public Transform rotationAfterAnimation;
 
+    private Cell spawnPoint = null;
+
     //private int number;
     private Entity target;
 
@@ -58,6 +60,10 @@ public class PlayerController : Entity
         }
     }
     
+    public void SetSpawnPoint(Cell cell)
+    {
+        spawnPoint = cell;
+    }
 
     private void Awake()
     {
@@ -66,7 +72,7 @@ public class PlayerController : Entity
         rotationAfterAnimation = new GameObject().transform;//Instantiate(GameObject.).transform;
     }
 
-    protected override void Start()
+    public override void Start()
     {
         health = maxHealth;
 
@@ -78,6 +84,8 @@ public class PlayerController : Entity
 
         //MoveCell(targetCell);
         currentCell = startingRoom.GetCell(transform.position);
+        spawnPoint = currentCell;
+        currentCell.room.segment.spawnEnemies();
         currentCell.pathable = false;
     }
 
@@ -364,5 +372,19 @@ public class PlayerController : Entity
     public override void OnHealthChange(int before, int after)
     {
         print("Player health was changed, please implement hearts: " + after);
+        if (Health < 1)
+        {
+            // Add animations etc here and use a callback
+            respawn();
+        }
+    }
+
+    private void respawn()
+    {
+        MoveCell(spawnPoint);
+        transform.position = currentCell.position;
+        Health = maxHealth;
+
+        currentCell.room.segment.spawnEnemies();
     }
 }

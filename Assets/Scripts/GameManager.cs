@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public static List<Entity> entities = new List<Entity>();
-
+    public static List<Spikes> spikes = new List<Spikes>();
     public static state currentState = state.wait;
 
     public float stateChangeTimer = 5f;
@@ -47,6 +47,10 @@ public class GameManager : MonoBehaviour
                 foreach (Entity entity in entities)
                 {
                     entity.ActionTick();
+                }
+                foreach (Spikes spike in spikes)
+                {
+                    spike.ActionTick();
                 }
                 stateChangeTimer = actionTime;
             }
