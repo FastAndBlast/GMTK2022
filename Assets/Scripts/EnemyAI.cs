@@ -9,6 +9,7 @@ public class EnemyAI : Entity
     [Header("Turns for enemy to finish attack")]
     public float windupLength = 2f;
 
+    public int damage;
 
     public enemyAction nextAction;
 
@@ -77,19 +78,33 @@ public class EnemyAI : Entity
         if (nextAction == enemyAction.attack)
         {
             //ATTACK
-            List<Cell> adjacent = new List<Cell>();
+            //List<Cell> adjacent = new List<Cell>();
 
-            adjacent.AddRange(currentCell.neighbors);
+            //adjacent.AddRange(currentCell.neighbors);
 
-            adjacent.Add(currentCell.neighbors[1].neighbors[0]);
-            adjacent.Add(currentCell.neighbors[1].neighbors[2]);
-            adjacent.Add(currentCell.neighbors[3].neighbors[0]);
-            adjacent.Add(currentCell.neighbors[3].neighbors[2]);
+            //adjacent.Add(currentCell.neighbors[1].neighbors[0]);
+            //adjacent.Add(currentCell.neighbors[1].neighbors[2]);
+            //adjacent.Add(currentCell.neighbors[3].neighbors[0]);
+            //adjacent.Add(currentCell.neighbors[3].neighbors[2]);
 
-            if (adjacent.Contains(PlayerController.instance.currentCell))
+            //Cell[] big;
+
+            Cell adjacentCell = null;
+
+            foreach (Cell cell in currentCell.neighbors)
             {
-                PlayerController.instance.Health -= 1;
-                // Knockback
+                if (cell == PlayerController.instance.currentCell)
+                {
+                    adjacentCell = cell;
+                    break;
+                }
+            }
+
+            if (adjacentCell != null)
+            {
+                //PlayerController.instance.Health -= 1;
+                PlayerController.instance.GetHit(this, damage);
+                
             }
 
             nextAction = enemyAction.move;
@@ -126,6 +141,133 @@ public class EnemyAI : Entity
 
         //Display whatever action is gonna happen
     }
+
+    public override void GetHit(Entity entity, int damage)
+    {
+        Health -= damage;
+        
+        Vector3 dir = currentCell.position - entity.currentCell.position;
+
+        dir.y = dir.z;
+
+        int length = 0;
+
+        Cell targetCell = currentCell;
+
+        if (dir.x == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.right] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.right];
+                    length++;
+                }
+            }
+        }
+        else if (dir.x == -1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.left] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.left];
+                    length++;
+                }
+            }
+        }
+        else if (dir.y == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.up] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.up];
+                    length++;
+                }
+            }
+        }
+        else if (dir.y == -1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.down] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.down];
+                    length++;
+                }
+            }
+        }
+
+        if (length > 0)
+        {
+            anim.StartKnockback(dir, length);
+        }
+    }
+
+    public override void GetHit(Vector2 dir, int damage)
+    {
+        Health -= damage;
+
+        //Vector3 dir = currentCell.position - entity.currentCell.position;
+
+        //dir.y = dir.z;
+
+        int length = 0;
+
+        Cell targetCell = currentCell;
+
+        if (dir.x == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.right] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.right];
+                    length++;
+                }
+            }
+        }
+        else if (dir.x == -1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.left] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.left];
+                    length++;
+                }
+            }
+        }
+        else if (dir.y == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.up] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.up];
+                    length++;
+                }
+            }
+        }
+        else if (dir.y == -1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (targetCell.neighbors[(int)direction.down] != null)
+                {
+                    targetCell = targetCell.neighbors[(int)direction.down];
+                    length++;
+                }
+            }
+        }
+
+        if (length > 0)
+        {
+            anim.StartKnockback(dir, length);
+        }
+    }
+
 
     public override void OnHealthChange(int before, int after)
     {
