@@ -166,6 +166,9 @@ public class Room : MonoBehaviour
         else
         {
             Debug.LogError("An object tried to find its cell in a room it is outside of. You must call GetCell on the correct room.");
+            Debug.Log(position);
+            print(this.name);
+            print(transform.parent.name);
             return null;
         }
 

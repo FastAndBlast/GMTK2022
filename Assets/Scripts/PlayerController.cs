@@ -414,7 +414,7 @@ public class PlayerController : Entity
         }
         else
         {
-            Health = 1;
+            Health = 3;
         }
         
 

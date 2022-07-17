@@ -20,6 +20,7 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
+        print(transform.position);
         cell = GetComponentInParent<Room>().GetCell(transform.position);
 
         cell.pathable = false;
