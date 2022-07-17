@@ -30,6 +30,13 @@ public abstract class Entity : MonoBehaviour
         GameManager.entities.Add(this);
     }
 
+    protected virtual void MoveCell(Cell newCell)
+    {
+        currentCell.pathable = true;
+        currentCell = newCell;
+        currentCell.pathable = false;
+    }
+
     public abstract void MovementTick();
 
     public abstract void ActionTick();

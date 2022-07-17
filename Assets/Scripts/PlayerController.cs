@@ -13,11 +13,54 @@ public class PlayerController : Entity
 
     PlayerAnimation anim;
 
+    public Room startingRoom;
+
     public static PlayerController instance;
+
+    [HideInInspector]
+    public Transform rotationAfterAnimation;
+
+    //private int number;
+
+    public int number
+    {
+        get
+        {
+            Vector3 up = rotationAfterAnimation.InverseTransformDirection(Vector3.up);
+
+            if (up == Vector3.up)
+            {
+                return 1;
+            }
+            else if (up == Vector3.right)
+            {
+                return 2;
+            }
+            else if (up == Vector3.forward)
+            {
+                return 3;
+            }
+            else if (up == Vector3.back)
+            {
+                return 4;
+            }
+            else if (up == Vector3.left)
+            {
+                return 5;
+            }
+            else
+            {
+                return 6;
+            }
+        }
+    }
+    
 
     private void Awake()
     {
         instance = this;
+
+        rotationAfterAnimation = new GameObject().transform;//Instantiate(GameObject.).transform;
     }
 
     protected override void Start()
@@ -25,8 +68,11 @@ public class PlayerController : Entity
         base.Start();
         anim = GetComponent<PlayerAnimation>();
 
-        currentCell = new Cell();
-        currentCell.neighbors = new Cell[4] { currentCell, currentCell, currentCell, currentCell };
+        //currentCell.neighbors = new Cell[4] { currentCell, currentCell, currentCell, currentCell };
+
+        //MoveCell(targetCell);
+        currentCell = startingRoom.GetCell(transform.position);
+        currentCell.pathable = false;
     }
 
 
@@ -94,37 +140,40 @@ public class PlayerController : Entity
             // Movement actions
             if (actions[0] == playerAction.up)
             {
-                if (currentCell.neighbors[(int)direction.up].pathable)
+                if (currentCell.neighbors[(int)direction.up] != null && currentCell.neighbors[(int)direction.up].pathable)
                 {
-                    currentCell = currentCell.neighbors[(int)direction.up];
+                    MoveCell(currentCell.neighbors[(int)direction.up]);
                     anim.StartMove(Vector2.up);
-                    //anim.StartKnockback(Vector2.up, 2);
+                    
+                    //GetHit(Vector2.up, 0);
                 }
             }
             else if (actions[0] == playerAction.right)
             {
-                if (currentCell.neighbors[(int)direction.right].pathable)
+                if (currentCell.neighbors[(int)direction.right] != null && currentCell.neighbors[(int)direction.right].pathable)
                 {
-                    currentCell = currentCell.neighbors[(int)direction.right];
+                    MoveCell(currentCell.neighbors[(int)direction.right]);
                     anim.StartMove(Vector2.right);
                 }
             }
             else if (actions[0] == playerAction.down)
             {
-                if (currentCell.neighbors[(int)direction.down].pathable)
+                if (currentCell.neighbors[(int)direction.down] != null && currentCell.neighbors[(int)direction.down].pathable)
                 {
-                    currentCell = currentCell.neighbors[(int)direction.down];
+                    MoveCell(currentCell.neighbors[(int)direction.down]);
                     anim.StartMove(Vector2.down);
                 }
             }
             else if (actions[0] == playerAction.left)
             {
-                if (currentCell.neighbors[(int)direction.left].pathable)
+                if (currentCell.neighbors[(int)direction.left] != null && currentCell.neighbors[(int)direction.left].pathable)
                 {
-                    currentCell = currentCell.neighbors[(int)direction.left];
+                    MoveCell(currentCell.neighbors[(int)direction.left]);
                     anim.StartMove(Vector2.left);
                 }
             }
+
+            //print(number);
         }
     }
 
@@ -145,132 +194,98 @@ public class PlayerController : Entity
 
     public override void FinalTick()
     {
-        actions.RemoveAt(0);
+        if (actions.Count > 0)
+        {
+            actions.RemoveAt(0);
+        }
     }
 
     public override void GetHit(Entity entity, int damage)
     {
         Health -= damage;
 
-        Vector3 dir = currentCell.position - entity.currentCell.position;
+        Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
-        dir.y = dir.z;
+        vecDir.y = vecDir.z;
 
         int length = 0;
 
         Cell targetCell = currentCell;
 
-        if (dir.x == 1)
+        Dictionary<Vector2, direction> vec2dir = new Dictionary<Vector2, direction>()
         {
-            for (int i = 0; i < 3; i++)
+            { Vector2.up, direction.up },
+            { Vector2.right, direction.right },
+            { Vector2.down, direction.down },
+            { Vector2.left, direction.left }
+        };
+
+        direction dir = vec2dir[vecDir];
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (targetCell.neighbors[(int)dir] != null && targetCell.neighbors[(int)dir].pathable)
             {
-                if (targetCell.neighbors[(int)direction.right] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.right];
-                    length++;
-                }
+                targetCell = targetCell.neighbors[(int)dir];
+                length++;
             }
-        }
-        else if (dir.x == -1)
-        {
-            for (int i = 0; i < 3; i++)
+            else
             {
-                if (targetCell.neighbors[(int)direction.left] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.left];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == 1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.up] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.up];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == -1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.down] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.down];
-                    length++;
-                }
+                break;
             }
         }
 
         if (length > 0)
         {
-            anim.StartKnockback(dir, length);
+            MoveCell(targetCell);
+            anim.StartKnockback(vecDir, length);
         }
     }
 
-    public override void GetHit(Vector2 dir, int damage)
+    public override void GetHit(Vector2 vecDir, int damage)
     {
         Health -= damage;
 
-        //Vector3 dir = currentCell.position - entity.currentCell.position;
+        //Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
-        //dir.y = dir.z;
+        //vecDir.y = vecDir.z;
 
         int length = 0;
 
         Cell targetCell = currentCell;
 
-        if (dir.x == 1)
+        Dictionary<Vector2, direction> vec2dir = new Dictionary<Vector2, direction>()
         {
-            for (int i = 0; i < 3; i++)
+            { Vector2.up, direction.up },
+            { Vector2.right, direction.right },
+            { Vector2.down, direction.down },
+            { Vector2.left, direction.left }
+        };
+
+        direction dir = vec2dir[vecDir];
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (targetCell.neighbors[(int)dir] != null && targetCell.neighbors[(int)dir].pathable)
             {
-                if (targetCell.neighbors[(int)direction.right] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.right];
-                    length++;
-                }
+                targetCell = targetCell.neighbors[(int)dir];
+                length++;
             }
-        }
-        else if (dir.x == -1)
-        {
-            for (int i = 0; i < 3; i++)
+            else
             {
-                if (targetCell.neighbors[(int)direction.left] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.left];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == 1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.up] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.up];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == -1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.down] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.down];
-                    length++;
-                }
+                break;
             }
         }
 
+        print(length);
+
+        print(currentCell.position);
+
         if (length > 0)
         {
-            anim.StartKnockback(dir, length);
+            MoveCell(targetCell);
+            print(targetCell.position);
+            anim.StartKnockback(vecDir, length);
         }
     }
 

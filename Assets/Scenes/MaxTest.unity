@@ -238,9 +238,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTransform: {fileID: 561216218}
-  timeLength: 0.25
+  moveTime: 0.25
   jumpHeight: 0.2
   stretchAmount: 0.3
+  knockbackTime: 0.5
 --- !u!4 &561216218
 Transform:
   m_ObjectHideFlags: 0
@@ -269,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55479160102c92e4a99b785e5dedc564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
 --- !u!1 &587640975
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1871095264
 MonoBehaviour:
   m_ObjectHideFlags: 0
