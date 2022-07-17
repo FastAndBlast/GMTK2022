@@ -169,6 +169,7 @@ public class DumbEnemy : Entity
 
         anim.ResetAnim();
         gameObject.SetActive(false);
+        currentCell.pathable = true;
         yield break;
     }
 
@@ -186,7 +187,6 @@ public class DumbEnemy : Entity
             RuntimeManager.PlayOneShot("event:/Ghouls/Ghoul_Die");
             //GameManager.entities.Remove(this);
             GameManager.flush.Add(this);
-            currentCell.pathable = true;
             StartCoroutine(Disable());
         }
     }

@@ -141,9 +141,9 @@ public class EnemyAI : Entity
         DisableAttackIndicators();
         if (Health < 1)
         {
-            //GameManager.entities.Remove(this);
-            // GameManager.flush.Add(this);
-            // gameObject.SetActive(false);
+            GameManager.entities.Remove(this);
+            GameManager.flush.Add(this);
+            gameObject.SetActive(false);
             return;
         }
 
@@ -368,6 +368,7 @@ public class EnemyAI : Entity
 
         anim.ResetAnim();
         gameObject.SetActive(false);
+        currentCell.pathable = true;
         yield break;
     }
 
@@ -385,7 +386,7 @@ public class EnemyAI : Entity
             RuntimeManager.PlayOneShot("event:/Ghouls/Ghoul_Die");
             //GameManager.entities.Remove(this);
             GameManager.flush.Add(this);
-            currentCell.pathable = true;
+            print("Making cell " + currentCell.position.x + " " + currentCell.position.z + " pathable");
             StartCoroutine(Disable());
         }
     }

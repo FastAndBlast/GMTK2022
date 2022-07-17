@@ -9,12 +9,16 @@ public class specialSpawn : MonoBehaviour
     public GameObject oddEnemy;
 
     public bool spawned = false;
+    public bool even;
 
 
     public void allTrigger()
     {
-        bool even = (PlayerController.instance.Number() % 2) == 0;
         spawned = !spawned;
+
+        bool lastEven = even;
+        even = (PlayerController.instance.Number() % 2) == 0;
+
         GameObject enemy;
         if (even)
         {
