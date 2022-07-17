@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    public int health;
+    private int health;
     public int Health
     {
         get
@@ -35,6 +35,10 @@ public abstract class Entity : MonoBehaviour
     public abstract void ActionTick();
 
     public abstract void FinalTick();
+
+    public abstract void GetHit(Entity entity, int damage);
+
+    public abstract void GetHit(Vector2 dir, int damage);
 
     // On health change event
     public abstract void OnHealthChange(int before, int after);
