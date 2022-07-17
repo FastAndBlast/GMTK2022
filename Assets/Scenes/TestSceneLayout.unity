@@ -10210,7 +10210,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   requiredNumber: 0
-  triggerMultipleTimes: 0
+  triggerMultipleTimes: 1
 --- !u!114 &1540530118
 MonoBehaviour:
   m_ObjectHideFlags: 0
