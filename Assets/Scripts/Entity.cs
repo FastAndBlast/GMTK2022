@@ -21,13 +21,20 @@ public abstract class Entity : MonoBehaviour
 
     public Cell currentCell;
 
-    private int maxHealth;
+    public int maxHealth;
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         maxHealth = health;
 
         GameManager.entities.Add(this);
+    }
+
+    public virtual void MoveCell(Cell newCell)
+    {
+        currentCell.pathable = true;
+        currentCell = newCell;
+        currentCell.pathable = false;
     }
 
     public abstract void MovementTick();

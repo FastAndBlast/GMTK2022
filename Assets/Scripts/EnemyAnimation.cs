@@ -61,6 +61,35 @@ public class EnemyAnimation : MonoBehaviour
         }
     }
 
+    public void ResetAnim()
+    {
+        anim.SetBool("isAttacking", false);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isHit", false);
+        anim.SetBool("isDead", false);
+    }
+
+    public void Face(Vector2 vecDir)
+    {
+        if (vecDir == Vector2.up)
+        {
+            rootTransform.forward = Vector3.forward;
+        }
+        else if (vecDir == Vector2.right)
+        {
+            rootTransform.forward = Vector3.right;
+        }
+        else if (vecDir == Vector2.down)
+        {
+            rootTransform.forward = Vector3.back;
+        }
+        else
+        {
+            rootTransform.forward = Vector3.left;
+        }
+    }
+
     public void StartAttack()
     {
         anim.SetBool("isAttacking", true);
@@ -79,7 +108,7 @@ public class EnemyAnimation : MonoBehaviour
         targetPosition = newPosition;
         Vector3 dir = (newPosition - targetPosition).normalized;
 
-        rootTransform.forward = dir;
+        //rootTransform.forward = dir;
 
         /*
         if (direction == Vector2.up)

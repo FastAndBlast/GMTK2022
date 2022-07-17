@@ -21,6 +21,7 @@ public class Cell
     public int costh = -1;
     public int costf = -1;
     public Cell previous = null;
+    public Room room;
     
     public List<Cell> FindPath(Cell target)
     {
@@ -72,6 +73,7 @@ public class Room : MonoBehaviour
 
     public Vector3Int originPos;
     public Vector3Int topRight;
+    public Segment segment;
 
     public void Awake()
     {
@@ -113,6 +115,7 @@ public class Room : MonoBehaviour
             // Create a cell moving to the right
             Cell newCell = new Cell();
             roomGrid[i, 0] = newCell;
+            newCell.room = this;
             if (i != 0)
             {
                 newCell.position = last.position + Vector3Int.right;
@@ -134,6 +137,7 @@ public class Room : MonoBehaviour
                 last.neighbors[(int)direction.up] = upCell;
                 upCell.neighbors[(int)direction.down] = last;
                 last = upCell;
+                upCell.room = this;
 
                 if (i > 0)
                 {
@@ -149,10 +153,10 @@ public class Room : MonoBehaviour
     public Cell GetCell(Vector3 position)
     {
         Vector3Int pos = Vector3Int.FloorToInt(position) - originPos;
-        if (Mathf.Abs(pos.x) < width && Mathf.Abs(pos.z) < height)
+        if (pos.x >= 0 && pos.z >= 0 && pos.x < width && pos.z < height)
         {
             Cell cell = roomGrid[pos.x, pos.z];
-            // Debug.Log(cell.position.x + " " + cell.position.z);
+            Debug.Log(cell.position.x + " " + cell.position.z);
             return cell;
         }
         else
@@ -177,7 +181,7 @@ public class Room : MonoBehaviour
         {
             Transform obj = obstacles[i];
             Cell cell = GetCell(obj.position);
-            // print("Making cell " + obj.position.x + "," + obj.position.z + " unpathable.");
+            print("Making cell " + obj.position.x + "," + obj.position.z + " unpathable.");
             if (cell == null)
             {
                 return;
@@ -222,8 +226,11 @@ public class Room : MonoBehaviour
                     //Debug.Log(i + " " + (i - start));
                     Cell ours = roomGrid[i, height - 1];
                     Cell theirs = other.roomGrid[i - start, 0];
-                    ours.neighbors[(int)direction.right] = theirs;
-                    theirs.neighbors[(int)direction.left] = ours;
+
+                    //Debug.Log(ours.position + " | " + theirs.position);
+
+                    ours.neighbors[(int)direction.up] = theirs;
+                    theirs.neighbors[(int)direction.down] = ours;
                 }
             }
         }
@@ -245,7 +252,7 @@ public class Room : MonoBehaviour
             {
                 if (start <= i && i <= end)
                 {
-                    // Debug.Log(i + " " + (i - start));
+                    //Debug.Log(i + " " + (i - start));
                     Cell ours = roomGrid[width - 1, i];
                     Cell theirs = other.roomGrid[0, i - start];
                     ours.neighbors[(int)direction.right] = theirs;
