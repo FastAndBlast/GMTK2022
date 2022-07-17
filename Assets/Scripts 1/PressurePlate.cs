@@ -22,10 +22,17 @@ public class PressurePlate : MonoBehaviour
     {
         if (!invoked && PlayerController.instance.currentCell == cell)
         {
-            if (PlayerController.instance.number == requiredNumber)
+            if (PlayerController.instance.number == requiredNumber || requiredNumber == 0)
             {
                 onPress.Invoke();
                 invoked = true;
+
+                // If it is a new segment pressure plate, set the spawn point and initialise the segment
+                if (requiredNumber == 0)
+                {
+                    PlayerController.instance.SetSpawnPoint(cell);
+                    cell.room.segment.spawnEnemies();
+                }
             }
         }
     }
