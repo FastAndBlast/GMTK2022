@@ -34,6 +34,9 @@ public class PlayerAnimation : MonoBehaviour
     private void Start()
     {
         originalScale = rootTransform.localScale;
+
+        moveTime = GameManager.instance.movementTime;
+        knockbackTime = GameManager.instance.actionTime;
     }
 
     public void StartMove(Vector2 direction)
@@ -41,6 +44,8 @@ public class PlayerAnimation : MonoBehaviour
         //transform.position += Vector3.one;
         playing = 1;
         curTime = moveTime;
+
+        print(moveTime);
 
         originalPosition = rootTransform.position;
         originalRotation = rootTransform.rotation; //rootTransform.eulerAngles;
@@ -130,6 +135,16 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
+    public void StartAttack(Entity target)
+    {
+        TrackHorizontalPosition.instance.StartAttack();
+    }
+
+    public void StartBlock(Vector2 direction)
+    {
+        TrackHorizontalPosition.instance.StartBlock();
+    }
+
     private void Update() {
         /*
         Vector2 movementAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -172,6 +187,8 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 playing = 0;
+                //transform.position = targetPosition;
+                //rootTransform.localPosition = Vector3.zero;
                 rootTransform.rotation = originalRotation;
                 rootTransform.Rotate(rootTransform.InverseTransformDirection(rotationAxis), 90);
                 //rootTransform.rotation *= Quaternion.AngleAxis(90, rotationAxis);
@@ -189,7 +206,9 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 playing = 0;
-                rootTransform.transform.position = targetPosition;
+                rootTransform.position = targetPosition;
+                //transform.position = targetPosition;
+                //rootTransform.localPosition = Vector3.zero;
                 //rootTransform.rotation *= Quaternion.AngleAxis(90, rotationAxis);
             }
         }
