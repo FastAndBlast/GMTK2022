@@ -355,7 +355,7 @@ public class PlayerController : Entity
 
         direction dir = vec2dir[vecDir];
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 1; i++)
         {
             if (targetCell.neighbors[(int)dir] != null && targetCell.neighbors[(int)dir].pathable)
             {
@@ -401,6 +401,8 @@ public class PlayerController : Entity
         transform.position = newPosition;
         anim.playing = 0;
         actions = new List<playerAction>();
+        GameManager.currentState = state.wait;
+        GameManager.instance.stateChangeTimer = GameManager.instance.waitTime + 2.5f;
 
         if (maxHealth > 0)
         {
