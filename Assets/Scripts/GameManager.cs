@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
 
     public static List<Entity> entities = new List<Entity>();
     public static List<Spikes> spikes = new List<Spikes>();
+
+    public static List<Entity> flush = new List<Entity>();
+
     public static state currentState = state.wait;
 
     public float stateChangeTimer = 5f;
@@ -21,6 +24,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void Update()
@@ -69,6 +77,13 @@ public class GameManager : MonoBehaviour
                 stateChangeTimer = waitTime;
             }
 
+            foreach (Entity entity in flush)
+            {
+                entities.Remove(entity);
+            }
+
+            flush = new List<Entity>();
+
             //print("STATE CHANGED: " + currentState);
             //print("STATE TIMER: " + stateChangeTimer);
         }
@@ -80,6 +95,7 @@ public class GameManager : MonoBehaviour
         foreach (Entity entity in entities)
         {
             entity.MovementTick();
+            print(entity.name);
         }
         stateChangeTimer = movementTime;
     }

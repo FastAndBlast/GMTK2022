@@ -45,8 +45,6 @@ public class PlayerAnimation : MonoBehaviour
         playing = 1;
         curTime = moveTime;
 
-        print(moveTime);
-
         originalPosition = rootTransform.position;
         originalRotation = rootTransform.rotation; //rootTransform.eulerAngles;
 
