@@ -24,14 +24,14 @@ public class PressurePlate : MonoBehaviour
     {
         if (!invoked && PlayerController.instance.currentCell == cell)
         {
-            if (PlayerController.instance.Number() == requiredNumber || requiredNumber == 0)
+            if (PlayerController.instance.Number() == requiredNumber || requiredNumber < 1)
             {
                 onPress.Invoke();
                 invoked = true;
                 RuntimeManager.PlayOneShot("event:/Objects/Pressure_Plate");
 
                 // If it is a new segment pressure plate, set the spawn point and initialise the segment
-                if (requiredNumber == 0)
+                if (requiredNumber == -1)
                 {
                     PlayerController.instance.SetSpawnPoint(cell);
                     cell.room.segment.spawnEnemies();
