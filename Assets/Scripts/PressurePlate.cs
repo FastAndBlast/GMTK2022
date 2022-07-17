@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using FMODUnity;
 
 public class PressurePlate : MonoBehaviour
 {
@@ -22,10 +23,11 @@ public class PressurePlate : MonoBehaviour
     {
         if (!invoked && PlayerController.instance.currentCell == cell)
         {
-            if (PlayerController.instance.number == requiredNumber || requiredNumber == 0)
+            if (PlayerController.instance.Number() == requiredNumber || requiredNumber == 0)
             {
                 onPress.Invoke();
                 invoked = true;
+                RuntimeManager.PlayOneShot("event:/Objects/Pressure_Plate");
 
                 // If it is a new segment pressure plate, set the spawn point and initialise the segment
                 if (requiredNumber == 0)

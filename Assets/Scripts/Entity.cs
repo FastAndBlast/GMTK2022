@@ -27,7 +27,8 @@ public abstract class Entity : MonoBehaviour
     {
         health = maxHealth;
 
-        GameManager.entities.Add(this);
+        //GameManager.entities.Add(this);
+        GameManager.addQueue.Add(this);
     }
 
     public virtual void MoveCell(Cell newCell)

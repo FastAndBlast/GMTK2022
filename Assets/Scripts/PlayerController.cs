@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 enum playerAction { idle, up, right, down, left, attack, block }
 
@@ -27,10 +28,9 @@ public class PlayerController : Entity
     //private int number;
     private Entity target;
 
-    public int number
+    public int Number()
     {
-        get
-        {
+        
             Vector3 up = rotationAfterAnimation.InverseTransformDirection(Vector3.up);
 
             if (up == Vector3.up)
@@ -57,7 +57,7 @@ public class PlayerController : Entity
             {
                 return 6;
             }
-        }
+        
     }
     
     public void SetSpawnPoint(Cell cell)
@@ -83,6 +83,7 @@ public class PlayerController : Entity
         //currentCell.neighbors = new Cell[4] { currentCell, currentCell, currentCell, currentCell };
 
         //MoveCell(targetCell);
+        print("Player init");
         currentCell = startingRoom.GetCell(transform.position);
         spawnPoint = currentCell;
         currentCell.room.segment.spawnEnemies();
@@ -160,6 +161,7 @@ public class PlayerController : Entity
                     {
                         MoveCell(currentCell.neighbors[(int)direction.up]);
                         anim.StartMove(Vector2.up);
+                        RuntimeManager.PlayOneShot("event:/Cube/Cube_Walk");
                     }
                     else
                     {
@@ -167,6 +169,7 @@ public class PlayerController : Entity
                         if (enemy != null)
                         {
                             target = enemy;
+                            anim.StartAttack(target);
                         }
                     }
                 }
@@ -179,6 +182,7 @@ public class PlayerController : Entity
                     {
                         MoveCell(currentCell.neighbors[(int)direction.right]);
                         anim.StartMove(Vector2.right);
+                        RuntimeManager.PlayOneShot("event:/Cube/Cube_Walk");
                     }
                     else
                     {
@@ -186,6 +190,7 @@ public class PlayerController : Entity
                         if (enemy != null)
                         {
                             target = enemy;
+                            anim.StartAttack(target);
                         }
                     }
                 }
@@ -198,6 +203,7 @@ public class PlayerController : Entity
                     {
                         MoveCell(currentCell.neighbors[(int)direction.down]);
                         anim.StartMove(Vector2.down);
+                        RuntimeManager.PlayOneShot("event:/Cube/Cube_Walk");
                     }
                     else
                     {
@@ -205,6 +211,7 @@ public class PlayerController : Entity
                         if (enemy != null)
                         {
                             target = enemy;
+                            anim.StartAttack(target);
                         }
                     }
                 }
@@ -217,6 +224,7 @@ public class PlayerController : Entity
                     {
                         MoveCell(currentCell.neighbors[(int)direction.left]);
                         anim.StartMove(Vector2.left);
+                        RuntimeManager.PlayOneShot("event:/Cube/Cube_Walk");
                     }
                     else
                     {
@@ -224,6 +232,7 @@ public class PlayerController : Entity
                         if (enemy != null)
                         {
                             target = enemy;
+                            anim.StartAttack(target);
                         }
                     }
                 }
@@ -239,8 +248,8 @@ public class PlayerController : Entity
         {
             if (target != null)
             {
-                anim.StartAttack(target);
                 target.GetHit(this, damage);
+                RuntimeManager.PlayOneShot("event:/Cube/Cube_Attack_Hit");
                 target = null;
             }
             
@@ -282,9 +291,12 @@ public class PlayerController : Entity
 
     public override void GetHit(Entity entity, int damage)
     {
-        Health -= damage;
+        Vector3 vecDir = (currentCell.position - entity.currentCell.position);
 
-        Vector3 vecDir = currentCell.position - entity.currentCell.position;
+        if (vecDir.magnitude > 1)
+        {
+            vecDir /= vecDir.magnitude;
+        }
 
         vecDir.y = vecDir.z;
 
@@ -320,12 +332,12 @@ public class PlayerController : Entity
             MoveCell(targetCell);
             anim.StartKnockback(vecDir, length);
         }
+
+        Health -= damage;
     }
 
     public override void GetHit(Vector2 vecDir, int damage)
     {
-        Health -= damage;
-
         //Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
         //vecDir.y = vecDir.z;
@@ -367,13 +379,16 @@ public class PlayerController : Entity
             print(targetCell.position);
             anim.StartKnockback(vecDir, length);
         }
+
+        Health -= damage;
     }
 
     public override void OnHealthChange(int before, int after)
     {
         print("Player health was changed, please implement hearts: " + after);
-        if (Health < 1)
+        if (after < 1)
         {
+            RuntimeManager.PlayOneShot("event:/Cube/Cube_Die");
             // Add animations etc here and use a callback
             respawn();
         }
@@ -382,8 +397,21 @@ public class PlayerController : Entity
     private void respawn()
     {
         MoveCell(spawnPoint);
-        transform.position = currentCell.position;
-        Health = maxHealth;
+        Vector3 newPosition = currentCell.position + new Vector3(0.5f, 0, 0.5f);
+        newPosition.y = transform.position.y;
+        transform.position = newPosition;
+        anim.playing = 0;
+        actions = new List<playerAction>();
+
+        if (maxHealth > 0)
+        {
+            Health = maxHealth;
+        }
+        else
+        {
+            Health = 1;
+        }
+        
 
         currentCell.room.segment.spawnEnemies();
     }

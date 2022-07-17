@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public enum enemyAction { move, windup, attack }
+
+public enum cond { none, one, two, three, four, five, six, even, odd }
 
 public class EnemyAI : Entity
 {
@@ -12,6 +15,8 @@ public class EnemyAI : Entity
     public int damage;
 
     public Transform attackIndicators;
+
+    public cond attackCondition;
 
     public enemyAction nextAction = enemyAction.move;
 
@@ -24,19 +29,24 @@ public class EnemyAI : Entity
 
     EnemyAnimation anim;
 
-    private void Awake()
+    public void Initialise()
     {
         anim = GetComponent<EnemyAnimation>();
+        currentCell = GetComponentInParent<Room>().GetCell(transform.position);
+        currentCell.pathable = false;
+        //print(currentCell);
+        //gameObject.SetActive(false);
     }
 
     public override void Start()
     {
+        // blank
+    }
+
+    public void ReAwake()
+    {
         base.Start();
-
-        currentCell = GetComponentInParent<Room>().GetCell(transform.position);
-        currentCell.pathable = false;
-
-        print(currentCell.position);
+        nextAction = enemyAction.move;
     }
 
     public override void MovementTick()
@@ -103,6 +113,7 @@ public class EnemyAI : Entity
             }
 
             anim.StartAttack();
+            RuntimeManager.PlayOneShot("event:/Ghouls/Ghoul_Attack");
 
             if (adjacentCell != null)
             {
@@ -124,7 +135,8 @@ public class EnemyAI : Entity
         DisableAttackIndicators();
         if (Health < 1)
         {
-            GameManager.entities.Remove(this);
+            //GameManager.entities.Remove(this);
+            GameManager.flush.Add(this);
             gameObject.SetActive(false);
             return;
         }
@@ -135,7 +147,6 @@ public class EnemyAI : Entity
             if (windupLeft < 1)
             {
                 nextAction = enemyAction.attack;
-                print("??? NANI");
                 EnableAttackIndicators();
             }
         }
@@ -164,7 +175,6 @@ public class EnemyAI : Entity
 
     public void EnableAttackIndicators()
     {
-        print(GameManager.currentState);
         if (currentCell.neighbors[(int)direction.up] != null)
         {
             attackIndicators.Find("Up").gameObject.SetActive(true);
@@ -199,8 +209,57 @@ public class EnemyAI : Entity
         }
     }
 
+    public bool CheckCondition()
+    {
+        if ((int)attackCondition > 0 && (int)attackCondition < 7)
+        {
+            if (PlayerController.instance.Number() == (int)attackCondition)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if ((int)attackCondition == 7)
+        {
+            if (PlayerController.instance.Number() % 2 == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if ((int)attackCondition == 8)
+        {
+            if (PlayerController.instance.Number() % 2 == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public override void GetHit(Entity entity, int damage)
     {
+        if (entity.gameObject == PlayerController.instance.gameObject)
+        {
+            if (!CheckCondition())
+            {
+                return;
+            }
+        }
+
         Health -= damage;
 
         Vector3 vecDir = currentCell.position - entity.currentCell.position;
@@ -245,7 +304,7 @@ public class EnemyAI : Entity
 
     public override void GetHit(Vector2 vecDir, int damage)
     {
-        Health -= damage;
+        
 
         //Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
@@ -284,11 +343,16 @@ public class EnemyAI : Entity
             anim.StartKnockback(vecDir, length);
         }
 
+        DisableAttackIndicators();
+
         nextAction = enemyAction.move;
+
+        Health -= damage;
     }
 
     IEnumerator Disable()
     {
+        timeToDisable = 1f;
         while (timeToDisable > 0)
         {
             timeToDisable -= Time.deltaTime;
@@ -305,16 +369,17 @@ public class EnemyAI : Entity
     {
         print("Enemy damaged: " + after);
 
-        if (nextAction != enemyAction.attack)
-        {
-            anim.StartHit();
-        }
+
+        anim.StartHit();
 
         if (after < 1)
         {
             // DEAD
             anim.StartDie();
-            GameManager.entities.Remove(this);
+            RuntimeManager.PlayOneShot("event:/Ghouls/Ghoul_Die");
+            //GameManager.entities.Remove(this);
+            GameManager.flush.Add(this);
+            currentCell.pathable = true;
             StartCoroutine(Disable());
         }
     }

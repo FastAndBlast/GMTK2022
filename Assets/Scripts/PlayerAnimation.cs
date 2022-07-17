@@ -17,7 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     [Header("Knockback")]
     public float knockbackTime = 0.5f;
 
-    private int playing;
+    public int playing;
 
     private float curTime = 1f;
 
@@ -44,8 +44,6 @@ public class PlayerAnimation : MonoBehaviour
         //transform.position += Vector3.one;
         playing = 1;
         curTime = moveTime;
-
-        print(moveTime);
 
         originalPosition = rootTransform.position;
         originalRotation = rootTransform.rotation; //rootTransform.eulerAngles;

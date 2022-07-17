@@ -30,7 +30,7 @@ public class EnemyAnimation : MonoBehaviour
 
     private Vector3 originalDirection;
 
-    private void Start()
+    private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         originalPosition = rootTransform.position;
