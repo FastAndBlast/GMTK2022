@@ -93,6 +93,12 @@ public class PlayerController : Entity
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Health--;
+            print("Health changed: " + Health);
+        }
+
         //Vector2 movementVector = Vector2.zero;
 
         playerAction nextAction = playerAction.idle;
@@ -387,7 +393,10 @@ public class PlayerController : Entity
 
     public override void OnHealthChange(int before, int after)
     {
-        print("Player health was changed, please implement hearts: " + after);
+        //print("Player health was changed, please implement hearts: " + after);
+
+        HealthUI.instance.UpdateUI(after);
+
         if (after < 1)
         {
             RuntimeManager.PlayOneShot("event:/Cube/Cube_Die");
