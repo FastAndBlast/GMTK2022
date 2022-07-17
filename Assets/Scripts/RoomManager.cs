@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
-    public List<Room> rooms;
+    public static List<Room> rooms = new List<Room>();
 
     void Awake()
     {
@@ -15,16 +15,16 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < rooms.Count; i++)
+        for (int i = 0; i < RoomManager.rooms.Count; i++)
         {
-            for (int j = 0; j < rooms.Count; j++)
+            for (int j = 0; j < RoomManager.rooms.Count; j++)
             {
                 if (i == j)
                 {
                     continue;
                 }
-                rooms[i].SetPathability();
-                rooms[i].JoinRooms(rooms[j]);
+                RoomManager.rooms[i].SetPathability();
+                RoomManager.rooms[i].JoinRooms(RoomManager.rooms[j]);
             }
         }
     }
