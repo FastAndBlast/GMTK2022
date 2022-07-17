@@ -149,7 +149,7 @@ public class Room : MonoBehaviour
     public Cell GetCell(Vector3 position)
     {
         Vector3Int pos = Vector3Int.FloorToInt(position) - originPos;
-        if (Mathf.Abs(pos.x) < width && Mathf.Abs(pos.z) < height)
+        if (pos.x >= 0 && pos.z >= 0 && pos.x < width && pos.z < height)
         {
             Cell cell = roomGrid[pos.x, pos.z];
             // Debug.Log(cell.position.x + " " + cell.position.z);
@@ -222,8 +222,11 @@ public class Room : MonoBehaviour
                     //Debug.Log(i + " " + (i - start));
                     Cell ours = roomGrid[i, height - 1];
                     Cell theirs = other.roomGrid[i - start, 0];
-                    ours.neighbors[(int)direction.right] = theirs;
-                    theirs.neighbors[(int)direction.left] = ours;
+
+                    //Debug.Log(ours.position + " | " + theirs.position);
+
+                    ours.neighbors[(int)direction.up] = theirs;
+                    theirs.neighbors[(int)direction.down] = ours;
                 }
             }
         }
@@ -245,7 +248,7 @@ public class Room : MonoBehaviour
             {
                 if (start <= i && i <= end)
                 {
-                    // Debug.Log(i + " " + (i - start));
+                    //Debug.Log(i + " " + (i - start));
                     Cell ours = roomGrid[width - 1, i];
                     Cell theirs = other.roomGrid[0, i - start];
                     ours.neighbors[(int)direction.right] = theirs;

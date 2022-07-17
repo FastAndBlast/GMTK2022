@@ -18,11 +18,20 @@ public class EnemyAI : Entity
 
     //private List<Cell> path;
 
+    private float timeToDisable = 0.5f;
+
     EnemyAnimation anim;
 
     private void Awake()
     {
         anim = GetComponent<EnemyAnimation>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        currentCell = GetComponentInParent<Room>().GetCell(transform.position);
     }
 
     public override void MovementTick()
@@ -41,7 +50,7 @@ public class EnemyAI : Entity
                 return;
             }
 
-            currentCell = path[1];
+            MoveCell(path[1]);
 
             anim.StartMove(currentCell.position);
 
@@ -131,6 +140,7 @@ public class EnemyAI : Entity
         }
         else
         {
+            //anim.Face(Vector2.up);
             if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) < 2)
             {
                 nextAction = enemyAction.attack;
@@ -145,129 +155,99 @@ public class EnemyAI : Entity
     public override void GetHit(Entity entity, int damage)
     {
         Health -= damage;
-        
-        Vector3 dir = currentCell.position - entity.currentCell.position;
 
-        dir.y = dir.z;
+        Vector3 vecDir = currentCell.position - entity.currentCell.position;
+
+        vecDir.y = vecDir.z;
 
         int length = 0;
 
         Cell targetCell = currentCell;
 
-        if (dir.x == 1)
+        Dictionary<Vector2, direction> vec2dir = new Dictionary<Vector2, direction>()
         {
-            for (int i = 0; i < 3; i++)
+            { Vector2.up, direction.up },
+            { Vector2.right, direction.right },
+            { Vector2.down, direction.down },
+            { Vector2.left, direction.left }
+        };
+
+        direction dir = vec2dir[vecDir];
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (targetCell.neighbors[(int)dir] != null && targetCell.neighbors[(int)dir].pathable)
             {
-                if (targetCell.neighbors[(int)direction.right] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.right];
-                    length++;
-                }
+                targetCell = targetCell.neighbors[(int)dir];
+                length++;
             }
-        }
-        else if (dir.x == -1)
-        {
-            for (int i = 0; i < 3; i++)
+            else
             {
-                if (targetCell.neighbors[(int)direction.left] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.left];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == 1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.up] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.up];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == -1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.down] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.down];
-                    length++;
-                }
+                break;
             }
         }
 
         if (length > 0)
         {
-            anim.StartKnockback(dir, length);
+            MoveCell(targetCell);
+            anim.StartKnockback(vecDir, length);
         }
     }
 
-    public override void GetHit(Vector2 dir, int damage)
+    public override void GetHit(Vector2 vecDir, int damage)
     {
         Health -= damage;
 
-        //Vector3 dir = currentCell.position - entity.currentCell.position;
+        //Vector3 vecDir = currentCell.position - entity.currentCell.position;
 
-        //dir.y = dir.z;
+        //vecDir.y = vecDir.z;
 
         int length = 0;
 
         Cell targetCell = currentCell;
 
-        if (dir.x == 1)
+        Dictionary<Vector2, direction> vec2dir = new Dictionary<Vector2, direction>()
         {
-            for (int i = 0; i < 3; i++)
+            { Vector2.up, direction.up },
+            { Vector2.right, direction.right },
+            { Vector2.down, direction.down },
+            { Vector2.left, direction.left }
+        };
+
+        direction dir = vec2dir[vecDir];
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (targetCell.neighbors[(int)dir] != null && targetCell.neighbors[(int)dir].pathable)
             {
-                if (targetCell.neighbors[(int)direction.right] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.right];
-                    length++;
-                }
+                targetCell = targetCell.neighbors[(int)dir];
+                length++;
             }
-        }
-        else if (dir.x == -1)
-        {
-            for (int i = 0; i < 3; i++)
+            else
             {
-                if (targetCell.neighbors[(int)direction.left] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.left];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == 1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.up] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.up];
-                    length++;
-                }
-            }
-        }
-        else if (dir.y == -1)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                if (targetCell.neighbors[(int)direction.down] != null)
-                {
-                    targetCell = targetCell.neighbors[(int)direction.down];
-                    length++;
-                }
+                break;
             }
         }
 
         if (length > 0)
         {
-            anim.StartKnockback(dir, length);
+            MoveCell(targetCell);
+            anim.StartKnockback(vecDir, length);
         }
     }
 
+    IEnumerator Disable()
+    {
+        while (timeToDisable > 0)
+        {
+            timeToDisable -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        anim.ResetAnim();
+        gameObject.SetActive(false);
+    }
 
     public override void OnHealthChange(int before, int after)
     {
@@ -282,6 +262,8 @@ public class EnemyAI : Entity
         {
             // DEAD
             anim.StartDie();
+            GameManager.entities.Remove(this);
+            StartCoroutine(Disable());
         }
     }
 }

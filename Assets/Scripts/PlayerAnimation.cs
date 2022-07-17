@@ -95,6 +95,8 @@ public class PlayerAnimation : MonoBehaviour
         {
             targetScale = rootTransform.localScale + dir * stretchAmount;
         }
+
+        PlayerController.instance.rotationAfterAnimation.Rotate(rootTransform.InverseTransformDirection(rotationAxis), 90);
     }
 
     public void StartKnockback(Vector2 direction, int length)

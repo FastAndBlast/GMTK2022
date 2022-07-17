@@ -17,13 +17,13 @@ public class RoomManager : MonoBehaviour
     {
         for (int i = 0; i < RoomManager.rooms.Count; i++)
         {
+            RoomManager.rooms[i].SetPathability();
             for (int j = 0; j < RoomManager.rooms.Count; j++)
             {
                 if (i == j)
                 {
                     continue;
                 }
-                RoomManager.rooms[i].SetPathability();
                 RoomManager.rooms[i].JoinRooms(RoomManager.rooms[j]);
             }
         }
