@@ -22,13 +22,13 @@ public class Pathfinding
         while (open.Count > 0)
         {
             Cell q = open[0];
-            int lowestCost = q.costh;
+            int lowestCost = q.costf;
             for (int i = 0; i < open.Count; i++)
             {
-                if (open[i].costh < lowestCost)
+                if (open[i].costf < lowestCost)
                 {
                     q = open[i];
-                    lowestCost = q.costh;
+                    lowestCost = q.costf;
                 }
             }
 
@@ -37,11 +37,12 @@ public class Pathfinding
             for (int i = 0; i < q.neighbors.Length; i++)
             {
                 Cell neighbor = q.neighbors[i];
-                if (!(neighbor != null && neighbor.pathable))
+                if (neighbor == null || !neighbor.pathable)
                 {
+                    // Debug.Log("Unpathable, isNull" + (neighbor == null) + " from " + q.position.x + " " + q.position.z + " in direction" + i);
                     continue;
                 }
-                neighbor.updateCost(origin, q);
+                bool updated = neighbor.updateCost(target, origin, q);
                 if (neighbor == target)
                 {
                     // Backtrack to reconstruct the path
@@ -58,27 +59,29 @@ public class Pathfinding
                     return output;
                 }
 
-                int newF = neighbor.costh + neighbor.calcHeuristic(target);
-                if (newF < neighbor.costf)
-                {
-                    neighbor.costf = newF;
-                }
-
-                if (open.Contains(neighbor))
+                if (open.Contains(neighbor) && !updated)
                 {
                     continue;
                 }
 
                 if (closed.Contains(neighbor))
                 {
-                    continue;
+                    if (updated)
+                    {
+                        closed.Remove(neighbor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
                 
                 open.Add(neighbor);
             }
-
+            // Debug.Log("closed " + q.position.x + " " + q.position.z);
             closed.Add(q);
         }
+        Debug.Log("No path found");
         // No path exists
         return null;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
-    public static List<Room> rooms;
+    public static List<Room> rooms = new List<Room>();
 
     void Awake()
     {

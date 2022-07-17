@@ -10,20 +10,11 @@ public class PathDrawer : MonoBehaviour
 
     public Room room;
     public GameObject endpoint;
-
-    public bool initalCall = true;
-    private void OnDrawGizmos()
+    public Room endpointRoom;
+    private void OnDrawGizmosSelected()
     {
-        if (initalCall)
-        {
-            print("ran");
-            RoomManager.rooms.Add(room);
-            room.Awake();
-            room.SetPathability();
-            initalCall = false;
-        }
         origin = room.GetCell(gameObject.transform.position);
-        target = room.GetCell(endpoint.transform.position);
+        target = endpointRoom.GetCell(endpoint.transform.position);
         List<Cell> path = Pathfinding.Path(target, origin);
         for (int i = 0; i < path.Count; i++)
         {
