@@ -83,6 +83,7 @@ public class PlayerController : Entity
         //currentCell.neighbors = new Cell[4] { currentCell, currentCell, currentCell, currentCell };
 
         //MoveCell(targetCell);
+        print("Player init");
         currentCell = startingRoom.GetCell(transform.position);
         spawnPoint = currentCell;
         currentCell.room.segment.spawnEnemies();

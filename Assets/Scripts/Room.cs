@@ -161,11 +161,7 @@ public class Room : MonoBehaviour
         if (pos.x >= 0 && pos.z >= 0 && pos.x < width && pos.z < height)
         {
             Cell cell = roomGrid[pos.x, pos.z];
-<<<<<<< HEAD
-            //Debug.Log(cell.position.x + " " + cell.position.z);
-=======
             // Debug.Log(cell.position.x + " " + cell.position.z);
->>>>>>> 788533f (Updating tutorial)
             return cell;
         }
         else

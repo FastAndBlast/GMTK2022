@@ -9,8 +9,8 @@ public class Spikes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        float angle = transform.eulerAngles.y;
-        direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        float angle = transform.eulerAngles.y * Mathf.Deg2Rad ;
+        direction = new Vector2(-(int)Mathf.Sin(angle), -(int)Mathf.Cos(angle));
         GameManager.spikes.Add(this);
     }
 

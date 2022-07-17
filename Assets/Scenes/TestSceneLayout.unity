@@ -7526,7 +7526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55479160102c92e4a99b785e5dedc564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 3
   damage: 1
   startingRoom: {fileID: 462412992}
   rotationAfterAnimation: {fileID: 0}
@@ -8352,22 +8352,22 @@ PrefabInstance:
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.49999973
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000010927841
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000001892759
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.8660256
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
@@ -8382,7 +8382,7 @@ PrefabInstance:
     - target: {fileID: 6738868098383825121, guid: 819c37e6e530a2a49b56dc50b3c6bef8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 120
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 819c37e6e530a2a49b56dc50b3c6bef8, type: 3}
