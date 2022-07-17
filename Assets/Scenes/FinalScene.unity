@@ -998,6 +998,7 @@ MonoBehaviour:
   evenEnemy: {fileID: 997293760}
   oddEnemy: {fileID: 713767102}
   spawned: 0
+  even: 0
 --- !u!114 &40264551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 47174089}
+  - component: {fileID: 47174090}
   m_Layer: 0
   m_Name: Segment
   m_TagString: Untagged
@@ -1163,6 +1165,20 @@ Transform:
   m_Father: {fileID: 1048400813}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &47174090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47174088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da9bb7b5af70624bab30d4465b46fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms: []
+  enemies: []
 --- !u!1001 &47408962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59352,7 +59368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333123452193217881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.542, y: 0.9, z: -20.592}
+  m_LocalPosition: {x: 10.542, y: 0.8, z: -21.557}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

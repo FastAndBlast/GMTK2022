@@ -1,60 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8978594904708320512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience_Music/Music
-  m_EditorClassIdentifier: 
-  Path: event:/Ambience_Music/Music
-  Guid:
-    Data1: -1029598955
-    Data2: 1326939678
-    Data3: 1789606806
-    Data4: -700093215
-  Banks:
-  - {fileID: 590659613772459729}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 200347
---- !u!114 &-6299839681005309534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Objects/Pressure_Plate
-  m_EditorClassIdentifier: 
-  Path: event:/Objects/Pressure_Plate
-  Guid:
-    Data1: -2113176896
-    Data2: 1247436513
-    Data3: -143813461
-    Data4: -2083877994
-  Banks:
-  - {fileID: 590659613772459729}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 600
---- !u!114 &-1282001110570510464
+--- !u!114 &-5795526841123142243
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,34 +27,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 5328
---- !u!114 &-443920733705805255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ghouls/Ghoul_Alive
-  m_EditorClassIdentifier: 
-  Path: event:/Ghouls/Ghoul_Alive
-  Guid:
-    Data1: 2093538822
-    Data2: 1188231466
-    Data3: -1533234769
-    Data4: 1513719384
-  Banks:
-  - {fileID: 590659613772459729}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 6000
---- !u!114 &-375530238489982937
+--- !u!114 &-5133663165435975087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,21 +70,21 @@ MonoBehaviour:
   - {fileID: 8179277161888080826}
   - {fileID: 590659613772459729}
   EditorEvents:
-  - {fileID: -443920733705805255}
-  - {fileID: 7947629146677224234}
-  - {fileID: -8978594904708320512}
-  - {fileID: 1529881398749523956}
-  - {fileID: 2308354580924693996}
-  - {fileID: -375530238489982937}
-  - {fileID: -1282001110570510464}
-  - {fileID: -6299839681005309534}
-  - {fileID: 6866680670054559147}
+  - {fileID: 7770019296074405441}
+  - {fileID: 6864955167466820377}
+  - {fileID: 8661327239306826648}
+  - {fileID: 681173878635061415}
+  - {fileID: 1370356474582146706}
+  - {fileID: -5133663165435975087}
+  - {fileID: -5795526841123142243}
+  - {fileID: 5492892693721479245}
+  - {fileID: 1997824666742453194}
   EditorParameters: []
   MasterBanks:
   - {fileID: 590659613772459729}
   StringsBanks:
   - {fileID: 8179277161888080826}
-  cacheTime: 637937068136433223
+  cacheTime: 637937174801504712
   cacheVersion: 131591
 --- !u!114 &590659613772459729
 MonoBehaviour:
@@ -182,12 +101,12 @@ MonoBehaviour:
   Path: Assets/Audio/Bone Crawler/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637937068136413211
+  lastModified: 637937174801464705
   FileSizes:
   - Name: Desktop
     Value: 4889472
   Exists: 1
---- !u!114 &1529881398749523956
+--- !u!114 &681173878635061415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -214,7 +133,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 985
---- !u!114 &2308354580924693996
+--- !u!114 &1370356474582146706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,7 +160,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 121176
---- !u!114 &6866680670054559147
+--- !u!114 &1997824666742453194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,7 +187,34 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1500
---- !u!114 &7947629146677224234
+--- !u!114 &5492892693721479245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Objects/Pressure_Plate
+  m_EditorClassIdentifier: 
+  Path: event:/Objects/Pressure_Plate
+  Guid:
+    Data1: -2113176896
+    Data2: 1247436513
+    Data3: -143813461
+    Data4: -2083877994
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 600
+--- !u!114 &6864955167466820377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -295,6 +241,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 2500
+--- !u!114 &7770019296074405441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ghouls/Ghoul_Alive
+  m_EditorClassIdentifier: 
+  Path: event:/Ghouls/Ghoul_Alive
+  Guid:
+    Data1: 2093538822
+    Data2: 1188231466
+    Data3: -1533234769
+    Data4: 1513719384
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 6000
 --- !u!114 &8179277161888080826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +283,35 @@ MonoBehaviour:
   Path: Assets/Audio/Bone Crawler/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637937068136433223
+  lastModified: 637937174801504712
   FileSizes:
   - Name: Desktop
     Value: 1148
   Exists: 1
+--- !u!114 &8661327239306826648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience_Music/Music
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience_Music/Music
+  Guid:
+    Data1: -1029598955
+    Data2: 1326939678
+    Data3: 1789606806
+    Data4: -700093215
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 200347

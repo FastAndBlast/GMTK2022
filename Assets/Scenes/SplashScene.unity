@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.058378033, g: 0.030120244, b: 0.02868095, a: 1}
+  m_IndirectSpecularColor: {r: 0.058378108, g: 0.030120306, b: 0.028680986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7972,7 +7972,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2103464293}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: Credits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
