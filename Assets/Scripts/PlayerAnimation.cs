@@ -172,6 +172,8 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 playing = 0;
+                //transform.position = targetPosition;
+                //rootTransform.localPosition = Vector3.zero;
                 rootTransform.rotation = originalRotation;
                 rootTransform.Rotate(rootTransform.InverseTransformDirection(rotationAxis), 90);
                 //rootTransform.rotation *= Quaternion.AngleAxis(90, rotationAxis);
@@ -189,7 +191,9 @@ public class PlayerAnimation : MonoBehaviour
             else
             {
                 playing = 0;
-                rootTransform.transform.position = targetPosition;
+                rootTransform.position = targetPosition;
+                //transform.position = targetPosition;
+                //rootTransform.localPosition = Vector3.zero;
                 //rootTransform.rotation *= Quaternion.AngleAxis(90, rotationAxis);
             }
         }

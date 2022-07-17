@@ -53,27 +53,6 @@ public class EnemyAI : Entity
             MoveCell(path[1]);
 
             anim.StartMove(currentCell.position);
-
-            // Start enemy movement animation
-            /*
-            if (currentCell.neighbors[0] == path[1])
-            {
-                anim.StartMove(Vector2.up);
-            }
-            else if (currentCell.neighbors[1] == path[1])
-            {
-                anim.StartMove(Vector2.left);
-            }
-            else if (currentCell.neighbors[2] == path[1])
-            {
-                anim.StartMove(Vector2.down);
-            }
-            else
-            {
-                anim.StartMove(Vector2.right);
-            }
-            */
-            //
         }
     }
 
