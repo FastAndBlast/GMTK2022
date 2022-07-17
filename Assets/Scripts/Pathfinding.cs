@@ -37,12 +37,7 @@ public class Pathfinding
             for (int i = 0; i < q.neighbors.Length; i++)
             {
                 Cell neighbor = q.neighbors[i];
-                if (neighbor == null || !neighbor.pathable)
-                {
-                    // Debug.Log("Unpathable, isNull" + (neighbor == null) + " from " + q.position.x + " " + q.position.z + " in direction" + i);
-                    continue;
-                }
-                bool updated = neighbor.updateCost(target, origin, q);
+
                 if (neighbor == target)
                 {
                     // Backtrack to reconstruct the path
@@ -58,6 +53,13 @@ public class Pathfinding
                     output.Reverse();
                     return output;
                 }
+
+                if (neighbor == null || !neighbor.pathable)
+                {
+                    // Debug.Log("Unpathable, isNull" + (neighbor == null) + " from " + q.position.x + " " + q.position.z + " in direction" + i);
+                    continue;
+                }
+                bool updated = neighbor.updateCost(target, origin, q);
 
                 if (open.Contains(neighbor) && !updated)
                 {
