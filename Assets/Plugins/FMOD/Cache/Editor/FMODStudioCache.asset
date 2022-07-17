@@ -1,0 +1,317 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8978594904708320512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience_Music/Music
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience_Music/Music
+  Guid:
+    Data1: -1029598955
+    Data2: 1326939678
+    Data3: 1789606806
+    Data4: -700093215
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 200347
+--- !u!114 &-6299839681005309534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Objects/Pressure_Plate
+  m_EditorClassIdentifier: 
+  Path: event:/Objects/Pressure_Plate
+  Guid:
+    Data1: -2113176896
+    Data2: 1247436513
+    Data3: -143813461
+    Data4: -2083877994
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 600
+--- !u!114 &-1282001110570510464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ghouls/Ghoul_Die
+  m_EditorClassIdentifier: 
+  Path: event:/Ghouls/Ghoul_Die
+  Guid:
+    Data1: -479898472
+    Data2: 1143058909
+    Data3: 135705998
+    Data4: 2024223760
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5328
+--- !u!114 &-443920733705805255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ghouls/Ghoul_Alive
+  m_EditorClassIdentifier: 
+  Path: event:/Ghouls/Ghoul_Alive
+  Guid:
+    Data1: 2093538822
+    Data2: 1188231466
+    Data3: -1533234769
+    Data4: 1513719384
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 6000
+--- !u!114 &-375530238489982937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ghouls/Ghoul_Attack
+  m_EditorClassIdentifier: 
+  Path: event:/Ghouls/Ghoul_Attack
+  Guid:
+    Data1: -1969011325
+    Data2: 1146161650
+    Data3: 1914957211
+    Data4: -1830281758
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 8179277161888080826}
+  - {fileID: 590659613772459729}
+  EditorEvents:
+  - {fileID: -443920733705805255}
+  - {fileID: 7947629146677224234}
+  - {fileID: -8978594904708320512}
+  - {fileID: 1529881398749523956}
+  - {fileID: 2308354580924693996}
+  - {fileID: -375530238489982937}
+  - {fileID: -1282001110570510464}
+  - {fileID: -6299839681005309534}
+  - {fileID: 6866680670054559147}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 590659613772459729}
+  StringsBanks:
+  - {fileID: 8179277161888080826}
+  cacheTime: 637936578538267507
+  cacheVersion: 131591
+--- !u!114 &590659613772459729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Bone Crawler/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 637936578538257532
+  FileSizes:
+  - Name: Desktop
+    Value: 4889472
+  Exists: 1
+--- !u!114 &1529881398749523956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Cube/Cube_Walk
+  m_EditorClassIdentifier: 
+  Path: event:/Cube/Cube_Walk
+  Guid:
+    Data1: -1924636332
+    Data2: 1337630847
+    Data3: 1910928524
+    Data4: 837211086
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 985
+--- !u!114 &2308354580924693996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience_Music/Dungeon
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience_Music/Dungeon
+  Guid:
+    Data1: 1057470561
+    Data2: 1223564100
+    Data3: 449960639
+    Data4: -345563430
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 121176
+--- !u!114 &6866680670054559147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Cube/Cube_Attack_Hit
+  m_EditorClassIdentifier: 
+  Path: event:/Cube/Cube_Attack_Hit
+  Guid:
+    Data1: -1542291482
+    Data2: 1094176009
+    Data3: -547746909
+    Data4: -1488599614
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1500
+--- !u!114 &7947629146677224234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Cube/Cube_Die
+  m_EditorClassIdentifier: 
+  Path: event:/Cube/Cube_Die
+  Guid:
+    Data1: 826554633
+    Data2: 1204880321
+    Data3: -850750790
+    Data4: 89016492
+  Banks:
+  - {fileID: 590659613772459729}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2500
+--- !u!114 &8179277161888080826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Audio/Bone Crawler/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 637936578538267507
+  FileSizes:
+  - Name: Desktop
+    Value: 1148
+  Exists: 1
